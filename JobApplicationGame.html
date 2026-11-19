@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmeraldCorps Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Application</a>
+            <a href="#quiz">Quiz</a>
+        </nav>
+        <h1>EmeraldCorps</h1>
+    </header>
+
+    <main id="quiz" class="quiz-section">
+        <div class="quiz-heading">
+            <p class="eyebrow">EmeraldCorps application</p>
+            <h2>Knowledge check</h2>
+            <p>Answer each question to continue.</p>
+        </div>
+
+        <form id="quiz-form" class="quiz-card">
+            <!-- QUESTION 1: Replace the text and answer labels below. Keep the data-question number. -->
+            <fieldset class="quiz-question is-active" data-question="1">
+                <legend><span>01</span> Replace this with question one.</legend>
+                <label><input type="radio" name="question-1" value="A"> Answer choice A</label>
+                <label><input type="radio" name="question-1" value="B"> Answer choice B</label>
+                <label><input type="radio" name="question-1" value="C"> Answer choice C</label>
+            </fieldset>
+
+            <!-- QUESTION 2: Replace the text and answer labels below. Keep the data-question number. -->
+            <fieldset class="quiz-question" data-question="2">
+                <legend><span>02</span> Please change each slider to answer the questions below.</legend>
+                <div class="slider-group" data-tooltip="Placeholder text: describe what the years slider measures here.">
+                    <h3>1. How many years of experience do you have?</h3>
+                    <div class="slider-labels"><span>1 year</span><output id="years-output">1 year</output><span>20 years</span></div>
+                    <input id="years-slider" type="range" name="years" min="1" max="20" value="1" aria-label="Years of experience">
+                </div>
+                <div class="slider-group" data-tooltip="Placeholder text: explain what counts as an award here.">
+                    <h3>2. How many awards have you received?</h3>
+                    <div class="slider-labels"><span>1 award</span><output id="awards-output">1 award</output><span>20 awards</span></div>
+                    <input id="awards-slider" type="range" name="awards" min="1" max="20" value="1" aria-label="Number of awards">
+                </div>
+                <div class="slider-group" data-tooltip="Placeholder text: explain what this rating means here.">
+                    <h3>3. Rate your confidence level.</h3>
+                    <div class="slider-labels"><span>1</span><output id="confidence-output">1</output><span>10</span></div>
+                    <input id="confidence-slider" type="range" name="confidence" min="1" max="10" value="1" aria-label="Confidence level">
+                </div>
+            </fieldset>
+
+            <!-- QUESTION 3: Replace the text and answer labels below. Keep the data-question number. -->
+            <fieldset class="quiz-question" data-question="3">
+                <legend><span>03</span> Replace this with question three.</legend>
+                <label><input type="radio" name="question-3" value="A"> Answer choice A</label>
+                <label><input type="radio" name="question-3" value="B"> Answer choice B</label>
+                <label><input type="radio" name="question-3" value="C"> Answer choice C</label>
+            </fieldset>
+
+            <!-- QUESTION 4: Replace the text and answer labels below. Keep the data-question number. -->
+            <fieldset class="quiz-question" data-question="4">
+                <legend><span>04</span> Replace this with question four.</legend>
+                <label><input type="radio" name="question-4" value="A"> Answer choice A</label>
+                <label><input type="radio" name="question-4" value="B"> Answer choice B</label>
+                <label><input type="radio" name="question-4" value="C"> Answer choice C</label>
+            </fieldset>
+
+            <!-- QUESTION 5: Replace the text and answer labels below. Keep the data-question number. -->
+            <fieldset class="quiz-question" data-question="5">
+                <legend><span>05</span> Replace this with question five.</legend>
+                <label><input type="radio" name="question-5" value="A"> Answer choice A</label>
+                <label><input type="radio" name="question-5" value="B"> Answer choice B</label>
+                <label><input type="radio" name="question-5" value="C"> Answer choice C</label>
+            </fieldset>
+
+            <div class="quiz-progress" aria-live="polite">
+                <span id="question-counter">Question 1 of 5</span>
+                <div class="progress-track"><div id="progress-bar"></div></div>
+            </div>
+
+            <p id="quiz-message" class="quiz-message" role="alert"></p>
+            <div class="quiz-controls">
+                <button type="button" id="previous-question" class="secondary-button" disabled>Previous</button>
+                <button type="button" id="next-question">Next question</button>
+            </div>
+        </form>
+
+        <section id="quiz-complete" class="quiz-complete" hidden>
+            <p class="eyebrow">Complete</p>
+            <h2>Thanks for completing the quiz!</h2>
+            <button type="button" id="restart-quiz">Start over</button>
+        </section>
+
+        <!-- FAILURE EVENT: Any failed answer replaces the quiz with this message. -->
+        <section id="application-message" class="application-message" hidden>
+            <h2>Thank you for your application, we will get back to you soon.</h2>
+        </section>
+    </main>
+
+    <a id="rejection-notification" class="rejection-notification" href="Rejection.html" hidden>
+        Application update available
+    </a>
+
+    <footer>
+        <p>&copy; 2025 Jon-Jon Rodriguez</p>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

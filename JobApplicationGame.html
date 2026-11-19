@@ -28,30 +28,18 @@
         <form id="quiz-form" class="quiz-card">
             <!-- QUESTION 1: Replace the text and answer labels below. Keep the data-question number. -->
             <fieldset class="quiz-question is-active" data-question="1">
-                <legend><span>01</span> Replace this with question one.</legend>
-                <label><input type="radio" name="question-1" value="A"> Answer choice A</label>
-                <label><input type="radio" name="question-1" value="B"> Answer choice B</label>
-                <label><input type="radio" name="question-1" value="C"> Answer choice C</label>
+                <legend><span>01</span> Are you a human being, capable of making decisions?</legend>
+                <label><input type="radio" name="question-1" value="A"> Yes, I am a human</label>
+                <label><input type="radio" name="question-1" value="B"> No, I am a robot</label>
+                <label><input type="radio" name="question-1" value="C"> I rather not answer.</label>
             </fieldset>
 
             <!-- QUESTION 2: Replace the text and answer labels below. Keep the data-question number. -->
             <fieldset class="quiz-question" data-question="2">
-                <legend><span>02</span> Please change each slider to answer the questions below.</legend>
-                <div class="slider-group" data-tooltip="Placeholder text: describe what the years slider measures here.">
-                    <h3>1. How many years of experience do you have?</h3>
-                    <div class="slider-labels"><span>1 year</span><output id="years-output">1 year</output><span>20 years</span></div>
-                    <input id="years-slider" type="range" name="years" min="1" max="20" value="1" aria-label="Years of experience">
-                </div>
-                <div class="slider-group" data-tooltip="Placeholder text: explain what counts as an award here.">
-                    <h3>2. How many awards have you received?</h3>
-                    <div class="slider-labels"><span>1 award</span><output id="awards-output">1 award</output><span>20 awards</span></div>
-                    <input id="awards-slider" type="range" name="awards" min="1" max="20" value="1" aria-label="Number of awards">
-                </div>
-                <div class="slider-group" data-tooltip="Placeholder text: explain what this rating means here.">
-                    <h3>3. Rate your confidence level.</h3>
-                    <div class="slider-labels"><span>1</span><output id="confidence-output">1</output><span>10</span></div>
-                    <input id="confidence-slider" type="range" name="confidence" min="1" max="10" value="1" aria-label="Confidence level">
-                </div>
+                <legend><span>02</span> Replace this with question two.</legend>
+                <label><input type="radio" name="question-2" value="A"> Answer choice A</label>
+                <label><input type="radio" name="question-2" value="B"> Answer choice B</label>
+                <label><input type="radio" name="question-2" value="C"> Answer choice C</label>
             </fieldset>
 
             <!-- QUESTION 3: Replace the text and answer labels below. Keep the data-question number. -->
@@ -95,16 +83,7 @@
             <h2>Thanks for completing the quiz!</h2>
             <button type="button" id="restart-quiz">Start over</button>
         </section>
-
-        <!-- FAILURE EVENT: Any failed answer replaces the quiz with this message. -->
-        <section id="application-message" class="application-message" hidden>
-            <h2>Thank you for your application, we will get back to you soon.</h2>
-        </section>
     </main>
-
-    <a id="rejection-notification" class="rejection-notification" href="Rejection.html" hidden>
-        Application update available
-    </a>
 
     <footer>
         <p>&copy; 2025 Jon-Jon Rodriguez</p>

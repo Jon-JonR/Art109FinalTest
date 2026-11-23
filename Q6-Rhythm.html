@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhythm Challenge | EmeraldCorps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .rhythm-game {
+            width: min(94%, 46rem);
+            margin: 0 auto 3rem;
+            padding: clamp(1.25rem, 4vw, 2rem);
+            border: 3px solid var(--accent-2);
+            border-radius: 1rem;
+            background: rgba(201, 211, 154, .48);
+            box-shadow: 0 .35rem 0 var(--accent-2);
+            color: var(--font);
+            font-family: "Barlow Condensed", sans-serif;
+            text-align: center;
+        }
+
+        .rhythm-game h2 {
+            margin-bottom: .35rem;
+            font-family: "Archivo Black", sans-serif;
+            font-size: clamp(1.6rem, 5vw, 2.4rem);
+        }
+
+        .rhythm-instructions {
+            margin-bottom: 1rem;
+            color: var(--accent-2);
+            font-size: 1.2rem;
+        }
+
+        .rhythm-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: .75rem;
+            margin-bottom: .75rem;
+            color: var(--accent-2);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .health-wrap {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .health-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: .25rem;
+            color: var(--accent-2);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .health-track {
+            height: 1rem;
+            overflow: hidden;
+            border: 2px solid var(--accent-2);
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, .75);
+        }
+
+        #rhythm-health-fill {
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            background: #20b2ab;
+            transition: width .2s ease, background-color .2s ease;
+        }
+
+        .rhythm-board {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            height: 20rem;
+            margin: 1rem auto;
+            overflow: hidden;
+            border: 3px solid var(--accent-2);
+            border-radius: .75rem;
+            background: rgba(255, 255, 255, .5);
+        }
+
+        .rhythm-lane {
+            position: relative;
+            overflow: hidden;
+            border-right: 2px solid rgba(43, 80, 68, .35);
+        }
+
+        .rhythm-lane:last-child {
+            border-right: 0;
+        }
+
+        .rhythm-lane-key {
+            position: absolute;
+            right: 0;
+            bottom: .75rem;
+            left: 0;
+            z-index: 2;
+            margin: auto;
+            color: var(--accent-2);
+            font-family: "Archivo Black", sans-serif;
+            font-size: 1.35rem;
+        }
+
+        .rhythm-hit-line {
+            position: absolute;
+            right: 0;
+            bottom: 2.9rem;
+            left: 0;
+            height: .25rem;
+            background: var(--accent-2);
+        }
+
+        .rhythm-note {
+            position: absolute;
+            top: -2.5rem;
+            left: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            border: 3px solid var(--accent-2);
+            border-radius: .5rem;
+            background: var(--accent-1);
+            box-shadow: 0 .2rem 0 var(--accent-2);
+            transform: translateX(-50%);
+        }
+
+        .rhythm-message {
+            min-height: 1.5rem;
+            margin: .75rem 0;
+            color: var(--accent-2);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        #rhythm-start {
+            min-width: 10rem;
+        }
+
+        @media (max-width: 520px) {
+            .rhythm-board {
+                height: 17rem;
+            }
+        }
+    </style>
+
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#about-section">About</a>
+            <a href="#portfolio-section">Work</a>
+            <a href="#contact-section">Contact</a>
+        </nav>
+<h1>&nbsp;&nbsp;EmeraldCorps&nbsp;&nbsp;</h1>
+    </header>
+<main class="input-section">
+    <section class="rhythm-game" aria-labelledby="rhythm-title">
+        <h2 id="rhythm-title">Rhythm Challenge</h2>
+        <p class="rhythm-instructions">Press D, F, J, or K when a note reaches the line.</p>
+
+        <div class="rhythm-stats">
+            <span id="rhythm-time">Time: 30s</span>
+            <span id="rhythm-score">Score: 0</span>
+        </div>
+
+        <div class="health-wrap">
+            <div class="health-label">
+                <span>Health</span>
+                <span id="rhythm-health-text">100%</span>
+            </div>
+            <div class="health-track" aria-label="Player health">
+                <div id="rhythm-health-fill"></div>
+            </div>
+        </div>
+
+        <div class="rhythm-board" id="rhythm-board" aria-label="Rhythm game board">
+            <div class="rhythm-lane" data-key="d"><div class="rhythm-hit-line"></div><div class="rhythm-lane-key">D</div></div>
+            <div class="rhythm-lane" data-key="f"><div class="rhythm-hit-line"></div><div class="rhythm-lane-key">F</div></div>
+            <div class="rhythm-lane" data-key="j"><div class="rhythm-hit-line"></div><div class="rhythm-lane-key">J</div></div>
+            <div class="rhythm-lane" data-key="k"><div class="rhythm-hit-line"></div><div class="rhythm-lane-key">K</div></div>
+        </div>
+
+        <p class="rhythm-message" id="rhythm-message" role="status">Press Start when you are ready.</p>
+        <button type="button" id="rhythm-start">Start Game</button>
+    </section>
+</main>
+    <footer>
+<p>&copy; 2025 Jon-Jon Rodriguez</p>        
+    </footer>
+    <script src="js/main.js"></script>
+    <script>
+        const rhythmKeys = ["d", "f", "j", "k"];
+        const rhythmBoard = document.getElementById("rhythm-board");
+        const rhythmLanes = [...document.querySelectorAll(".rhythm-lane")];
+        const rhythmStart = document.getElementById("rhythm-start");
+        const rhythmTime = document.getElementById("rhythm-time");
+        const rhythmScore = document.getElementById("rhythm-score");
+        const rhythmMessage = document.getElementById("rhythm-message");
+        const rhythmHealthFill = document.getElementById("rhythm-health-fill");
+        const rhythmHealthText = document.getElementById("rhythm-health-text");
+
+        let rhythmPlaying = false;
+        let rhythmHealth = 100;
+        let rhythmPoints = 0;
+        let rhythmSeconds = 30;
+        let rhythmNotes = [];
+        let rhythmStartTime = 0;
+        let rhythmLastSpawn = 0;
+        let rhythmAnimation;
+        let rhythmTimer;
+
+        const rhythmTravelTime = 1500;
+        const rhythmHitWindow = 260;
+        const rhythmSpawnInterval = 620;
+
+        function updateRhythmHealth(amount) {
+            rhythmHealth = Math.max(0, rhythmHealth - amount);
+            rhythmHealthFill.style.width = `${rhythmHealth}%`;
+            rhythmHealthText.textContent = `${rhythmHealth}%`;
+
+            if (rhythmHealth <= 35) {
+                rhythmHealthFill.style.backgroundColor = "#9b2727";
+            } else if (rhythmHealth <= 65) {
+                rhythmHealthFill.style.backgroundColor = "#c98527";
+            }
+
+            if (rhythmHealth === 0) {
+                endRhythmGame(true);
+            }
+        }
+
+        function spawnRhythmNote(now) {
+            const laneIndex = Math.floor(Math.random() * rhythmKeys.length);
+            const note = document.createElement("div");
+            note.className = "rhythm-note";
+            note.setAttribute("aria-hidden", "true");
+            rhythmLanes[laneIndex].appendChild(note);
+            rhythmNotes.push({ laneIndex, element: note, spawnTime: now, hit: false });
+        }
+
+        function removeRhythmNote(note) {
+            note.element.remove();
+            rhythmNotes = rhythmNotes.filter(activeNote => activeNote !== note);
+        }
+
+        function endRhythmGame(lost) {
+            if (!rhythmPlaying) return;
+            rhythmPlaying = false;
+            cancelAnimationFrame(rhythmAnimation);
+            clearInterval(rhythmTimer);
+            rhythmNotes.forEach(note => note.element.remove());
+            rhythmNotes = [];
+            rhythmStart.disabled = false;
+
+            if (lost) {
+                rhythmMessage.textContent = "Your health reached 0. Redirecting...";
+                window.setTimeout(() => {
+                    window.location.href = "Message.html";
+                }, 500);
+            } else {
+                rhythmMessage.textContent = `Nice rhythm! Final score: ${rhythmPoints}.`;
+                rhythmStart.textContent = "Play Again";
+            }
+        }
+
+        function rhythmFrame(now) {
+            if (!rhythmPlaying) return;
+
+            if (now - rhythmLastSpawn >= rhythmSpawnInterval && now - rhythmStartTime < 30000) {
+                spawnRhythmNote(now);
+                rhythmLastSpawn = now;
+            }
+
+            const boardHeight = rhythmBoard.clientHeight;
+            rhythmNotes.slice().forEach(note => {
+                const age = now - note.spawnTime;
+                const progress = age / rhythmTravelTime;
+                note.element.style.top = `${progress * (boardHeight - 70)}px`;
+
+                if (age > rhythmTravelTime + rhythmHitWindow) {
+                    updateRhythmHealth(10);
+                    rhythmMessage.textContent = "Missed note! Keep going.";
+                    removeRhythmNote(note);
+                }
+            });
+
+            rhythmAnimation = requestAnimationFrame(rhythmFrame);
+        }
+
+        function startRhythmGame() {
+            rhythmPlaying = true;
+            rhythmHealth = 100;
+            rhythmPoints = 0;
+            rhythmSeconds = 30;
+            rhythmNotes = [];
+            rhythmStartTime = performance.now();
+            rhythmLastSpawn = rhythmStartTime;
+            rhythmStart.disabled = true;
+            rhythmStart.textContent = "Playing...";
+            rhythmScore.textContent = "Score: 0";
+            rhythmTime.textContent = "Time: 30s";
+            rhythmMessage.textContent = "Follow the beat!";
+            rhythmHealthFill.style.width = "100%";
+            rhythmHealthFill.style.backgroundColor = "#20b2ab";
+            rhythmHealthText.textContent = "100%";
+
+            rhythmTimer = setInterval(() => {
+                rhythmSeconds -= 1;
+                rhythmTime.textContent = `Time: ${Math.max(0, rhythmSeconds)}s`;
+                if (rhythmSeconds <= 0) endRhythmGame(false);
+            }, 1000);
+
+            rhythmAnimation = requestAnimationFrame(rhythmFrame);
+        }
+
+        document.addEventListener("keydown", event => {
+            if (!rhythmPlaying || !rhythmKeys.includes(event.key.toLowerCase())) return;
+            event.preventDefault();
+
+            const key = event.key.toLowerCase();
+            const laneIndex = rhythmKeys.indexOf(key);
+            const now = performance.now();
+            const matchingNotes = rhythmNotes.filter(note => note.laneIndex === laneIndex);
+            const note = matchingNotes.sort((a, b) =>
+                Math.abs((now - a.spawnTime) - rhythmTravelTime) - Math.abs((now - b.spawnTime) - rhythmTravelTime)
+            )[0];
+
+            if (note && Math.abs((now - note.spawnTime) - rhythmTravelTime) <= rhythmHitWindow) {
+                rhythmPoints += 10;
+                rhythmScore.textContent = `Score: ${rhythmPoints}`;
+                rhythmMessage.textContent = "Great hit!";
+                removeRhythmNote(note);
+            } else {
+                updateRhythmHealth(15);
+                rhythmMessage.textContent = "Wrong timing!";
+            }
+        });
+
+        rhythmStart.addEventListener("click", startRhythmGame);
+    </script>
+</body>
+</html>

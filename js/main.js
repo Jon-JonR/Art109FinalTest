@@ -115,3 +115,31 @@ if (quizForm) {
 
     showQuestion(0);
 }
+
+const spinButton = document.getElementById('spin-button');
+
+if (spinButton) {
+    const symbols = ['🍒', '⭐', '💎', '🍀', '🔔', '🍋'];
+    const reels = [...document.querySelectorAll('.slot-reel')];
+    const slotMessage = document.getElementById('slot-message');
+
+    spinButton.addEventListener('click', () => {
+        spinButton.disabled = true;
+        slotMessage.textContent = 'Spinning...';
+        reels.forEach((reel) => reel.classList.add('is-spinning'));
+
+        window.setTimeout(() => {
+            const result = reels.map((reel) => {
+                const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+                reel.textContent = symbol;
+                reel.classList.remove('is-spinning');
+                return symbol;
+            });
+
+            slotMessage.textContent = result.every((symbol) => symbol === result[0])
+                ? 'Jackpot!'
+                : 'Thanks for spinning!';
+            spinButton.disabled = false;
+        }, 900);
+    });
+}

@@ -108,6 +108,59 @@ nav a:hover {
     font: inherit;
 }
 
+.slot-machine {
+    width: min(90%, 24rem);
+    padding: 1.5rem;
+    border: 3px solid var(--accent-2);
+    border-radius: 1rem;
+    background: var(--accent-1);
+    box-shadow: 0 .35rem 0 var(--accent-2);
+    text-align: center;
+    font-family: "Barlow Condensed", sans-serif;
+}
+
+.slot-machine h2 {
+    margin-bottom: 1rem;
+    color: var(--font);
+    font-family: "Archivo Black", sans-serif;
+    font-size: 1.35rem;
+}
+
+.slot-reels {
+    display: flex;
+    justify-content: center;
+    gap: .6rem;
+    margin-bottom: 1rem;
+}
+
+.slot-reel {
+    display: grid;
+    width: 4.25rem;
+    height: 4.25rem;
+    place-items: center;
+    border: 3px solid var(--accent-2);
+    border-radius: .6rem;
+    background: white;
+    font-size: 2.35rem;
+}
+
+.slot-reel.is-spinning {
+    animation: slot-spin .18s linear infinite;
+}
+
+.slot-message {
+    min-height: 1.4rem;
+    margin-top: .8rem;
+    color: var(--accent-2);
+    font-size: 1.2rem;
+}
+
+@keyframes slot-spin {
+    50% {
+        transform: translateY(-.25rem) rotate(4deg);
+    }
+}
+
 .form-title {
     width: min(80%, 22rem);
     padding: 0.8rem 1rem;
@@ -425,3 +478,202 @@ button:disabled {
         flex-direction: column-reverse;
     }
 }
+
+
+
+        .crafting-game {
+            width: min(95%, 54rem);
+            margin: 0 auto 3rem;
+            padding: clamp(1rem, 4vw, 2rem);
+            border: 3px solid var(--accent-2);
+            border-radius: 1rem;
+            background: rgba(201, 211, 154, .48);
+            box-shadow: 0 .35rem 0 var(--accent-2);
+            color: var(--font);
+            font-family: "Barlow Condensed", sans-serif;
+        }
+
+        .crafting-game h2 {
+            margin-bottom: 1rem;
+            color: var(--font);
+            font-family: "Archivo Black", sans-serif;
+            font-size: clamp(1.5rem, 4vw, 2.25rem);
+            text-align: center;
+        }
+
+        .crafting-game .stats {
+            margin-bottom: 1rem;
+            color: var(--accent-2);
+            font-size: 1.35rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .crafting-game .target-box {
+            margin-bottom: 1.25rem;
+            padding: .8rem;
+            border: 2px solid var(--accent-2);
+            border-radius: .6rem;
+            background: rgba(255, 255, 255, .55);
+            text-align: center;
+        }
+
+        .crafting-game .target-title {
+            color: var(--accent-2);
+            font-size: 1rem;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .crafting-game .target-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .5rem;
+            margin-top: .25rem;
+            color: var(--font);
+            font-size: 1.45rem;
+            font-weight: 700;
+        }
+
+        .crafting-game .item-image {
+            display: block;
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .crafting-game .crafting-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .crafting-game .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 64px);
+            grid-template-rows: repeat(3, 64px);
+            gap: 6px;
+            padding: 8px;
+            border: 3px solid var(--accent-2);
+            border-radius: .35rem;
+            background: var(--accent-1);
+        }
+
+        .crafting-game .slot,
+        .crafting-game .output-slot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, .65);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .crafting-game .slot {
+            width: 64px;
+            height: 64px;
+            border: 2px solid var(--accent-2);
+            border-radius: .25rem;
+        }
+
+        .crafting-game .slot:hover,
+        .crafting-game .output-slot:hover {
+            background: white;
+        }
+
+        .crafting-game .output-slot {
+            width: 76px;
+            height: 76px;
+            border: 3px solid var(--accent-2);
+            border-radius: .4rem;
+            text-align: center;
+        }
+
+        .crafting-game .output-slot.ready {
+            background: var(--accent-1);
+            box-shadow: 0 0 0 .2rem rgba(32, 178, 171, .25);
+        }
+
+        .crafting-game .slot span.label,
+        .crafting-game .output-slot span.label {
+            width: 100%;
+            color: var(--font);
+            font-size: .75rem;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+        }
+
+        .crafting-game .arrow {
+            color: var(--accent-2);
+            font-size: 2rem;
+        }
+
+        .crafting-game .palette {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: .5rem;
+            margin-bottom: 1rem;
+        }
+
+        .crafting-game .mat-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .15rem;
+            padding: .5rem .25rem;
+            border: 2px solid var(--accent-2);
+            border-radius: .45rem;
+            background: rgba(255, 255, 255, .55);
+            color: var(--font);
+            font: 1rem "Barlow Condensed", sans-serif;
+        }
+
+        .crafting-game .mat-btn.active,
+        .crafting-game .mat-btn:hover {
+            background: var(--accent-1);
+        }
+
+        .crafting-game .controls {
+            width: 100%;
+        }
+
+        .crafting-game .action-btn {
+            width: 100%;
+        }
+
+        .crafting-game .feedback {
+            min-height: 1.5rem;
+            margin-top: .75rem;
+            color: var(--accent-2);
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        @media (max-width: 520px) {
+            .crafting-game .crafting-area {
+                gap: .4rem;
+            }
+
+            .crafting-game .grid {
+                grid-template-columns: repeat(3, 52px);
+                grid-template-rows: repeat(3, 52px);
+                gap: 4px;
+                padding: 5px;
+            }
+
+            .crafting-game .slot {
+                width: 52px;
+                height: 52px;
+            }
+
+            .crafting-game .output-slot {
+                width: 64px;
+                height: 64px;
+            }
+        }
+

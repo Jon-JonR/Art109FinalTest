@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Crafting Minigame | EmeraldCorps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#about-section">About</a>
+            <a href="#portfolio-section">Work</a>
+            <a href="#contact-section">Contact</a>
+        </nav>
+<h1>&nbsp;&nbsp;EmeraldCorps&nbsp;&nbsp;</h1>
+    </header>
+<main class="input-section">
+    <section class="crafting-game" aria-labelledby="crafting-game-title">
+        <h2 id="crafting-game-title">Minecraft Crafting Challenge</h2>
+        <div class="stats">
+            <span id="timer">Time: 60s</span>
+        </div>
+
+        <div class="target-box">
+            <div class="target-title">Craft This Item</div>
+            <div class="target-item" id="target-name">Loading...</div>
+        </div>
+
+        <div class="crafting-area">
+            <div class="grid" id="grid"></div>
+            <div class="arrow" aria-hidden="true">➔</div>
+            <div class="output-slot" id="output" title="Click to collect crafted item"></div>
+        </div>
+
+        <div class="palette" id="palette"></div>
+
+        <div class="controls">
+            <button class="action-btn" onclick="clearGrid()">Clear Grid</button>
+        </div>
+
+        <div class="feedback" id="feedback">Select a material, then click grid slots!</div>
+    </section>
+</main>
+    <footer>
+<p>&copy; 2025 Jon-Jon Rodriguez</p>        
+    </footer>
+    <script src="js/main.js"></script>
+    <script src="js/minecraft.js"></script>
+</body>
+</html>

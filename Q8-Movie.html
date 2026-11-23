@@ -108,8 +108,8 @@
         const movieStatus = document.getElementById("movie-status");
         const movieTotalSeconds = 1 * 60 * 60 + 33 * 60 + 40;
         let movieRemainingSeconds = movieTotalSeconds;
-        let movieCountdown = null;
         let moviePlayer = null;
+        let movieTimestampSync = null;
 
         function formatMovieTime(totalSeconds) {
             const hours = Math.floor(totalSeconds / 3600);
@@ -124,44 +124,39 @@
             movieTimer.textContent = formatMovieTime(movieRemainingSeconds);
         }
 
-        function pauseMovieTimer() {
-            if (movieCountdown !== null) {
-                clearInterval(movieCountdown);
-                movieCountdown = null;
+        function syncMovieTimerToVideo() {
+            if (!moviePlayer || typeof moviePlayer.getCurrentTime !== "function") return;
+
+            const videoTimestamp = Math.floor(moviePlayer.getCurrentTime());
+            movieRemainingSeconds = Math.max(0, movieTotalSeconds - videoTimestamp);
+            renderMovieTimer();
+
+            if (movieRemainingSeconds === 0) {
+                movieStatus.textContent = "Time is up.";
+                moviePlayer.pauseVideo();
             }
-        }
-
-        function startMovieTimer() {
-            if (movieCountdown !== null || movieRemainingSeconds <= 0) return;
-
-            movieCountdown = setInterval(() => {
-                movieRemainingSeconds -= 1;
-                renderMovieTimer();
-
-                if (movieRemainingSeconds <= 0) {
-                    pauseMovieTimer();
-                    movieStatus.textContent = "Time is up.";
-                    if (moviePlayer) moviePlayer.pauseVideo();
-                }
-            }, 1000);
         }
 
         function onYouTubeIframeAPIReady() {
             moviePlayer = new YT.Player("movie-video", {
                 events: {
+                    onReady() {
+                        syncMovieTimerToVideo();
+                        movieTimestampSync = setInterval(syncMovieTimerToVideo, 250);
+                    },
                     onStateChange(event) {
                         if (event.data === YT.PlayerState.PLAYING) {
                             movieStatus.textContent = "Timer running with the video.";
-                            startMovieTimer();
+                            syncMovieTimerToVideo();
                         } else if (event.data === YT.PlayerState.PAUSED) {
                             movieStatus.textContent = "Timer paused while the video is paused.";
-                            pauseMovieTimer();
+                            syncMovieTimerToVideo();
                         } else if (event.data === YT.PlayerState.BUFFERING) {
                             movieStatus.textContent = "Buffering — timer paused.";
-                            pauseMovieTimer();
+                            syncMovieTimerToVideo();
                         } else if (event.data === YT.PlayerState.ENDED) {
                             movieStatus.textContent = "Video ended.";
-                            pauseMovieTimer();
+                            syncMovieTimerToVideo();
                         }
                     }
                 }

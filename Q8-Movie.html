@@ -9,63 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
-        .movie-page {
-            width: min(94%, 58rem);
-            margin: 0 auto 3rem;
-            padding: clamp(1.25rem, 4vw, 2rem);
-            border: 3px solid var(--accent-2);
-            border-radius: 1rem;
-            background: rgba(201, 211, 154, .48);
-            box-shadow: 0 .35rem 0 var(--accent-2);
-            color: var(--font);
-            font-family: "Barlow Condensed", sans-serif;
-            text-align: center;
-        }
 
-        .movie-page h2 {
-            margin-bottom: 1rem;
-            font-family: "Archivo Black", sans-serif;
-            font-size: clamp(1.6rem, 5vw, 2.5rem);
-        }
-
-        .movie-embed {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            border: 3px solid var(--accent-2);
-            border-radius: .75rem;
-            background: #111;
-            aspect-ratio: 16 / 9;
-        }
-
-        .movie-embed iframe {
-            display: block;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        .movie-timer-label {
-            margin-top: 1rem;
-            color: var(--accent-2);
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
-
-        .movie-timer {
-            margin-top: .15rem;
-            color: var(--font);
-            font-family: "Archivo Black", sans-serif;
-            font-size: clamp(2rem, 8vw, 4rem);
-            letter-spacing: .08em;
-        }
-
-        .movie-status {
-            min-height: 1.5rem;
-            margin-top: .5rem;
-            color: var(--accent-2);
-            font-size: 1.1rem;
-        }
     </style>
 
 </head>
@@ -103,67 +47,5 @@
     </footer>
     <script src="js/main.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
-    <script>
-        const movieTimer = document.getElementById("movie-timer");
-        const movieStatus = document.getElementById("movie-status");
-        const movieTotalSeconds = 1 * 60 * 60 + 33 * 60 + 40;
-        let movieRemainingSeconds = movieTotalSeconds;
-        let moviePlayer = null;
-        let movieTimestampSync = null;
-
-        function formatMovieTime(totalSeconds) {
-            const hours = Math.floor(totalSeconds / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const seconds = totalSeconds % 60;
-            return [hours, minutes, seconds]
-                .map(value => String(value).padStart(2, "0"))
-                .join(":");
-        }
-
-        function renderMovieTimer() {
-            movieTimer.textContent = formatMovieTime(movieRemainingSeconds);
-        }
-
-        function syncMovieTimerToVideo() {
-            if (!moviePlayer || typeof moviePlayer.getCurrentTime !== "function") return;
-
-            const videoTimestamp = Math.floor(moviePlayer.getCurrentTime());
-            movieRemainingSeconds = Math.max(0, movieTotalSeconds - videoTimestamp);
-            renderMovieTimer();
-
-            if (movieRemainingSeconds === 0) {
-                movieStatus.textContent = "Time is up.";
-                moviePlayer.pauseVideo();
-            }
-        }
-
-        function onYouTubeIframeAPIReady() {
-            moviePlayer = new YT.Player("movie-video", {
-                events: {
-                    onReady() {
-                        syncMovieTimerToVideo();
-                        movieTimestampSync = setInterval(syncMovieTimerToVideo, 250);
-                    },
-                    onStateChange(event) {
-                        if (event.data === YT.PlayerState.PLAYING) {
-                            movieStatus.textContent = "Timer running with the video.";
-                            syncMovieTimerToVideo();
-                        } else if (event.data === YT.PlayerState.PAUSED) {
-                            movieStatus.textContent = "Timer paused while the video is paused.";
-                            syncMovieTimerToVideo();
-                        } else if (event.data === YT.PlayerState.BUFFERING) {
-                            movieStatus.textContent = "Buffering — timer paused.";
-                            syncMovieTimerToVideo();
-                        } else if (event.data === YT.PlayerState.ENDED) {
-                            movieStatus.textContent = "Video ended.";
-                            syncMovieTimerToVideo();
-                        }
-                    }
-                }
-            });
-        }
-
-        renderMovieTimer();
-    </script>
 </body>
 </html>

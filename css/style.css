@@ -7,8 +7,7 @@
 --dark:  #1a928c;
 }
 
-/* CSS resets */
-
+/* #region HTML */
 html {
     scroll-behavior: smooth;
 }
@@ -74,12 +73,33 @@ nav a:hover {
     transform: scale(1.3);
 }
 
+.form-title {
+    width: min(80%, 22rem);
+    padding: 0.8rem 1rem;
+    font-family: "Barlow Condensed", sans-serif;
+    margin: 2rem 0;
+}
+
+footer {
+    background-color:var(--bg-color-2);
+    color: var(--font);
+    padding: 1rem;
+    text-align: right;
+}
+
+footer p {
+    font-size: 1.2rem;
+}
+
 @media (max-width: 750px) {
     nav a{
         margin: 0 .5rem;
     }
 }
 
+/* #endregion */
+
+/* #region Intro */
 .username {
     color: var(--accent-1);
     font-size: 1.5rem;
@@ -108,6 +128,9 @@ nav a:hover {
     font: inherit;
 }
 
+/* #endregion */
+
+/* #region Slot Machine Level */
 .slot-machine {
     width: min(90%, 24rem);
     padding: 1.5rem;
@@ -161,25 +184,9 @@ nav a:hover {
     }
 }
 
-.form-title {
-    width: min(80%, 22rem);
-    padding: 0.8rem 1rem;
-    font-family: "Barlow Condensed", sans-serif;
-    margin: 2rem 0;
-}
+/* #endregion */
 
-footer {
-    background-color:var(--bg-color-2);
-    color: var(--font);
-    padding: 1rem;
-    text-align: right;
-}
-
-footer p {
-    font-size: 1.2rem;
-}
-
-/* Quiz screens */
+/* #region Quiz Level */
 .quiz-section {
     flex: 1;
     width: min(90%, 44rem);
@@ -295,6 +302,54 @@ footer p {
     margin-right: .5rem;
 }
 
+
+.quiz-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+button {
+    padding: .8rem 1.2rem;
+    border: 0;
+    border-radius: .5rem;
+    background: var(--accent-2);
+    color: white;
+    cursor: pointer;
+    font: 1.15rem "Barlow Condensed", sans-serif;
+}
+
+button:hover:not(:disabled) {
+    background: var(--dark);
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: .45;
+}
+
+.secondary-button {
+    background: transparent;
+    border: 2px solid var(--accent-2);
+    color: var(--accent-2);
+}
+
+.quiz-message {
+    min-height: 1.3rem;
+    margin-top: 1rem;
+    color: #9b2727;
+    font: 1.1rem "Barlow Condensed", sans-serif;
+}
+
+.quiz-complete {
+    text-align: center;
+    font-family: "Barlow Condensed", sans-serif;
+}
+
+/* #endregion  */
+
+/* #region Slider Level */
 .slider-group {
     position: relative;
     display: grid;
@@ -357,50 +412,9 @@ footer p {
     accent-color: var(--accent-2);
     cursor: pointer;
 }
+/* #endregion */
 
-.quiz-controls {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
-button {
-    padding: .8rem 1.2rem;
-    border: 0;
-    border-radius: .5rem;
-    background: var(--accent-2);
-    color: white;
-    cursor: pointer;
-    font: 1.15rem "Barlow Condensed", sans-serif;
-}
-
-button:hover:not(:disabled) {
-    background: var(--dark);
-}
-
-button:disabled {
-    cursor: not-allowed;
-    opacity: .45;
-}
-
-.secondary-button {
-    background: transparent;
-    border: 2px solid var(--accent-2);
-    color: var(--accent-2);
-}
-
-.quiz-message {
-    min-height: 1.3rem;
-    margin-top: 1rem;
-    color: #9b2727;
-    font: 1.1rem "Barlow Condensed", sans-serif;
-}
-
-.quiz-complete {
-    text-align: center;
-    font-family: "Barlow Condensed", sans-serif;
-}
+/* #region Rejection */
 
 .Rejection {
     flex: 1;
@@ -478,9 +492,9 @@ button:disabled {
         flex-direction: column-reverse;
     }
 }
+/* #endregion Slot Machine */
 
-
-
+/* #region Minecraft Level */
         .crafting-game {
             width: min(95%, 54rem);
             margin: 0 auto 3rem;
@@ -676,4 +690,382 @@ button:disabled {
                 height: 64px;
             }
         }
+
+/* #endregion */
+
+/* #region Rhythm Level */ 
+        .rhythm-game {
+            width: min(94%, 46rem);
+            margin: 0 auto 3rem;
+            padding: clamp(1.25rem, 4vw, 2rem);
+            border: 3px solid var(--accent-2);
+            border-radius: 1rem;
+            background: rgba(201, 211, 154, .48);
+            box-shadow: 0 .35rem 0 var(--accent-2);
+            color: var(--font);
+            font-family: "Barlow Condensed", sans-serif;
+            text-align: center;
+        }
+
+        .rhythm-game h2 {
+            margin-bottom: .35rem;
+            font-family: "Archivo Black", sans-serif;
+            font-size: clamp(1.6rem, 5vw, 2.4rem);
+        }
+
+        .rhythm-instructions {
+            margin-bottom: 1rem;
+            color: var(--accent-2);
+            font-size: 1.2rem;
+        }
+
+        .rhythm-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: .75rem;
+            margin-bottom: .75rem;
+            color: var(--accent-2);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .health-wrap {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .health-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: .25rem;
+            color: var(--accent-2);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .health-track {
+            height: 1rem;
+            overflow: hidden;
+            border: 2px solid var(--accent-2);
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, .75);
+        }
+
+        #rhythm-health-fill {
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            background: #20b2ab;
+            transition: width .2s ease, background-color .2s ease;
+        }
+
+        .rhythm-board {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            height: 20rem;
+            margin: 1rem auto;
+            overflow: hidden;
+            border: 3px solid var(--accent-2);
+            border-radius: .75rem;
+            background: rgba(255, 255, 255, .5);
+        }
+
+        .rhythm-lane {
+            position: relative;
+            overflow: hidden;
+            border-right: 2px solid rgba(43, 80, 68, .35);
+        }
+
+        .rhythm-lane:last-child {
+            border-right: 0;
+        }
+
+        .rhythm-lane-key {
+            position: absolute;
+            right: 0;
+            bottom: .75rem;
+            left: 0;
+            z-index: 2;
+            margin: auto;
+            color: var(--accent-2);
+            font-family: "Archivo Black", sans-serif;
+            font-size: 1.35rem;
+        }
+
+        .rhythm-hit-line {
+            position: absolute;
+            right: 0;
+            bottom: 2.9rem;
+            left: 0;
+            height: .25rem;
+            background: var(--accent-2);
+        }
+
+        .rhythm-note {
+            position: absolute;
+            top: -2.5rem;
+            left: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            border: 3px solid var(--accent-2);
+            border-radius: .5rem;
+            background: var(--accent-1);
+            box-shadow: 0 .2rem 0 var(--accent-2);
+            transform: translateX(-50%);
+        }
+
+        .rhythm-message {
+            min-height: 1.5rem;
+            margin: .75rem 0;
+            color: var(--accent-2);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        #rhythm-start {
+            min-width: 10rem;
+        }
+
+        @media (max-width: 520px) {
+            .rhythm-board {
+                height: 17rem;
+            }
+        }
+/* #endregion */
+
+/* #region Signature Level */
+        .signature-page {
+            width: min(94%, 52rem);
+            margin: 0 auto 3rem;
+            padding: clamp(1.25rem, 4vw, 2rem);
+            border: 3px solid var(--accent-2);
+            border-radius: 1rem;
+            background: rgba(201, 211, 154, .48);
+            box-shadow: 0 .35rem 0 var(--accent-2);
+            color: var(--font);
+            font-family: "Barlow Condensed", sans-serif;
+            text-align: center;
+        }
+
+        .signature-page h2 {
+            margin-bottom: .5rem;
+            font-family: "Archivo Black", sans-serif;
+            font-size: clamp(1.6rem, 5vw, 2.4rem);
+        }
+
+        .signature-instructions {
+            margin-bottom: 1rem;
+            color: var(--accent-2);
+            font-size: 1.2rem;
+        }
+
+        .signature-canvas-wrap {
+            position: relative;
+            width: 100%;
+            margin: 0 auto 1.5rem;
+            overflow: visible;
+            border: 3px solid var(--accent-2);
+            border-radius: .75rem;
+            background: white;
+            box-shadow: inset 0 0 .75rem rgba(43, 80, 68, .15);
+        }
+
+        #signature-canvas {
+            display: block;
+            width: 100%;
+            height: 22rem;
+            cursor: not-allowed;
+            touch-action: none;
+        }
+
+        #signature-canvas.is-active {
+            cursor: crosshair;
+        }
+
+        .signature-pen-active {
+            position: absolute;
+            z-index: 10;
+            display: none;
+            width: min(75vw, 28rem);
+            pointer-events: none;
+            /* The pen tip is at the lower-left of the image, so offset the
+               overlay until that tip—not the image center—tracks the cursor. */
+            transform: translate(-23%, -105%) rotate(-18deg);
+        }
+
+        .signature-pen-active.is-visible {
+            display: block;
+        }
+
+        .signature-pen-trigger {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .signature-pen-trigger:hover {
+            background: transparent;
+        }
+
+        .signature-pen-trigger.is-hidden {
+            display: none;
+        }
+
+        .signature-pen-lying {
+            display: block;
+            width: min(98vw, 48rem);
+            height: auto;
+        }
+
+        .signature-status {
+            min-height: 1.5rem;
+            margin-top: 1rem;
+            color: var(--accent-2);
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+/* #endregion */ 
+
+/* #region Movie Level */ 
+        .movie-page {
+            width: min(94%, 58rem);
+            margin: 0 auto 3rem;
+            padding: clamp(1.25rem, 4vw, 2rem);
+            border: 3px solid var(--accent-2);
+            border-radius: 1rem;
+            background: rgba(201, 211, 154, .48);
+            box-shadow: 0 .35rem 0 var(--accent-2);
+            color: var(--font);
+            font-family: "Barlow Condensed", sans-serif;
+            text-align: center;
+        }
+
+        .movie-page h2 {
+            margin-bottom: 1rem;
+            font-family: "Archivo Black", sans-serif;
+            font-size: clamp(1.6rem, 5vw, 2.5rem);
+        }
+
+        .movie-embed {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border: 3px solid var(--accent-2);
+            border-radius: .75rem;
+            background: #111;
+            aspect-ratio: 16 / 9;
+        }
+
+        .movie-embed iframe {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .movie-timer-label {
+            margin-top: 1rem;
+            color: var(--accent-2);
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .movie-timer {
+            margin-top: .15rem;
+            color: var(--font);
+            font-family: "Archivo Black", sans-serif;
+            font-size: clamp(2rem, 8vw, 4rem);
+            letter-spacing: .08em;
+        }
+
+        .movie-status {
+            min-height: 1.5rem;
+            margin-top: .5rem;
+            color: var(--accent-2);
+            font-size: 1.1rem;
+        }
+/* #endregion */
+
+/* #region Captcha Level */ 
+        .captcha-page {
+            width: min(92%, 34rem);
+            margin: 0 auto 3rem;
+            padding: clamp(1.25rem, 4vw, 2rem);
+            border: 3px solid var(--accent-2);
+            border-radius: 1rem;
+            background: rgba(201, 211, 154, .48);
+            box-shadow: 0 .35rem 0 var(--accent-2);
+            color: var(--font);
+            font-family: "Barlow Condensed", sans-serif;
+            text-align: center;
+        }
+
+        .captcha-page h2 {
+            margin-bottom: .5rem;
+            font-family: "Archivo Black", sans-serif;
+            font-size: clamp(1.6rem, 5vw, 2.4rem);
+        }
+
+        .captcha-instructions {
+            margin-bottom: 1rem;
+            color: var(--accent-2);
+            font-size: 1.2rem;
+        }
+
+        .captcha-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin-bottom: 1rem;
+            border: 3px solid var(--accent-2);
+            border-radius: .5rem;
+            background: white;
+        }
+
+        .captcha-form {
+            display: grid;
+            gap: .75rem;
+        }
+
+        .captcha-form label {
+            color: var(--accent-2);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: left;
+        }
+
+        .captcha-form input {
+            width: 100%;
+            padding: .75rem 1rem;
+            border: 2px solid var(--accent-2);
+            border-radius: .5rem;
+            color: var(--font);
+            font: 1.2rem "Barlow Condensed", sans-serif;
+        }
+
+        .captcha-form button {
+            width: 100%;
+        }
+
+        .captcha-message {
+            min-height: 1.5rem;
+            margin-top: .25rem;
+            color: var(--accent-2);
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .captcha-message.is-success {
+            color: var(--accent-2);
+        }
+
+        .captcha-message.is-error {
+            color: #9b2727;
+        }
+/* #endregion */
 

@@ -35,6 +35,8 @@
         let score = 0;
         let timeLeft = 60;
         let active = true;
+        let hasWon = false;
+        let timer = null;
 
         const gridEl = document.getElementById("grid");
         const paletteEl = document.getElementById("palette");
@@ -42,6 +44,12 @@
         const targetNameEl = document.getElementById("target-name");
         const timerEl = document.getElementById("timer");
         const feedbackEl = document.getElementById("feedback");
+        const minecraftContinueButton = document.getElementById("minecraft-continue");
+
+        if (minecraftContinueButton) {
+            minecraftContinueButton.hidden = false;
+            minecraftContinueButton.disabled = true;
+        }
 
         function getMat(id) {
             return MATERIALS.find(material => material.id === id);
@@ -109,12 +117,15 @@
         }
 
         function claimItem(matched) {
-            if (!active) return;
+            if (!active || hasWon) return;
             if (matched.name === currentRecipe.name) {
                 score += 1;
+                hasWon = true;
+                active = false;
+                clearInterval(timer);
                 feedbackEl.textContent = `Crafted ${matched.name}! (+1)`;
+                if (minecraftContinueButton) minecraftContinueButton.disabled = false;
                 clearGrid();
-                nextRecipe();
             } else {
                 feedbackEl.textContent = `You crafted ${matched.name}, but need ${currentRecipe.name}!`;
                 clearGrid();
@@ -134,12 +145,15 @@
         }
 
         function endGame() {
+            if (hasWon) return;
             active = false;
+            clearInterval(timer);
             timeLeft = 0;
             timerEl.textContent = "Time: 0s";
             feedbackEl.textContent = `Time's up! You crafted ${score} item${score === 1 ? "" : "s"}.`;
             outputEl.onclick = null;
             outputEl.classList.remove("ready");
+            window.location.href = "Message.html";
         }
 
         renderPalette();
@@ -147,7 +161,7 @@
         nextRecipe();
         checkRecipe();
 
-        const timer = setInterval(() => {
+        timer = setInterval(() => {
             if (!active) {
                 clearInterval(timer);
                 return;
@@ -159,3 +173,10 @@
                 clearInterval(timer);
             }
         }, 1000);
+
+        if (minecraftContinueButton) {
+            minecraftContinueButton.addEventListener("click", () => {
+                if (!hasWon) return;
+                window.location.href = "Q6-Rhythm.html";
+            });
+        }

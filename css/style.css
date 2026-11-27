@@ -128,6 +128,26 @@ footer p {
     font: inherit;
 }
 
+.button {
+    color: white;
+    background-color:rgb(16, 196, 25);
+    padding: 15px;
+    margin: 50px auto;
+    display: block;
+    width: 100px;
+    text-align: center;
+    border-radius: 10px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all .5s;
+}
+
+.button:hover {
+    background-color: rgb(147, 250, 134);
+    color: black;
+    transform: scale(1.2);
+}
+
 /* #endregion */
 
 /* #region Slot Machine Level */
@@ -161,13 +181,19 @@ footer p {
     width: 4.25rem;
     height: 4.25rem;
     place-items: center;
+    overflow: hidden;
     border: 3px solid var(--accent-2);
     border-radius: .6rem;
     background: white;
     font-size: 2.35rem;
+    perspective: 12rem;
 }
 
-.slot-reel.is-spinning {
+.slot-symbol {
+    display: inline-block;
+}
+
+.slot-symbol.is-spinning {
     animation: slot-spin .18s linear infinite;
 }
 
@@ -178,10 +204,20 @@ footer p {
     font-size: 1.2rem;
 }
 
+.slot-machine .button {
+    margin-top: .75rem;
+}
+
 @keyframes slot-spin {
     50% {
         transform: translateY(-.25rem) rotate(4deg);
     }
+}
+
+.slot-machine + #q4-slot-continue {
+    display: inline-block;
+    visibility: visible;
+    margin-top: 1rem;
 }
 
 /* #endregion */
@@ -271,6 +307,32 @@ footer p {
     gap: .8rem;
 }
 
+.all-at-once-quiz {
+    display: grid;
+    gap: 1.5rem;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border: 3px solid var(--accent-2);
+    border-radius: 1rem;
+    background: rgba(201, 211, 154, .48);
+    box-shadow: 0 .35rem 0 var(--accent-2);
+}
+
+.all-at-once-quiz .quiz-question {
+    display: grid;
+    gap: .8rem;
+    padding: 0 0 1.25rem;
+    border-bottom: 2px solid rgba(43, 80, 68, .35);
+}
+
+.all-at-once-quiz .quiz-question:last-of-type {
+    border-bottom: 0;
+}
+
+.all-at-once-quiz + #choice-continue {
+    display: block;
+    margin: 1.5rem auto 3rem;
+}
+
 .quiz-question legend {
     width: 100%;
     margin-bottom: 1rem;
@@ -350,6 +412,58 @@ button:disabled {
 /* #endregion  */
 
 /* #region Slider Level */
+.slider-survey {
+    flex: 1;
+    width: min(90%, 44rem);
+    margin: 0 auto 4rem;
+}
+
+.survey-heading {
+    margin-bottom: 1.5rem;
+    color: var(--font);
+    font-family: "Barlow Condensed", sans-serif;
+    text-align: center;
+}
+
+.survey-heading h2 {
+    margin: .35rem 0;
+    font-family: "Archivo Black", sans-serif;
+    font-size: clamp(1.8rem, 5vw, 2.7rem);
+}
+
+.slider-card {
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border: 3px solid var(--accent-2);
+    border-radius: 1rem;
+    background: rgba(201, 211, 154, .48);
+    box-shadow: 0 .35rem 0 var(--accent-2);
+}
+
+.slider-group label {
+    color: var(--font);
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.slider-group label span {
+    margin-right: .5rem;
+    color: var(--accent-2);
+    font-family: "Archivo Black", sans-serif;
+}
+
+.slider-card + #slider-survey-continue {
+    display: block;
+    margin: 1.5rem auto 0;
+}
+
+.slider-survey-message {
+    min-height: 1.4rem;
+    margin-top: 1rem;
+    color: var(--accent-2);
+    font: 1.15rem "Barlow Condensed", sans-serif;
+    text-align: center;
+}
+
 .slider-group {
     position: relative;
     display: grid;
@@ -668,6 +782,12 @@ button:disabled {
             text-align: center;
         }
 
+        .crafting-game + #minecraft-continue {
+            display: inline-block;
+            visibility: visible;
+            margin: 0 auto 3rem;
+        }
+
         @media (max-width: 520px) {
             .crafting-game .crafting-area {
                 gap: .4rem;
@@ -793,14 +913,39 @@ button:disabled {
             font-size: 1.35rem;
         }
 
-        .rhythm-hit-line {
+.rhythm-target {
             position: absolute;
-            right: 0;
-            bottom: 2.9rem;
-            left: 0;
-            height: .25rem;
-            background: var(--accent-2);
+    bottom: 2.75rem;
+    left: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 3px dashed var(--accent-2);
+    border-radius: 50%;
+    background: rgba(201, 211, 154, .2);
+    transform: translateX(-50%);
         }
+
+.rhythm-target.is-hit {
+    animation: rhythm-target-hit .28s ease-out;
+}
+
+@keyframes rhythm-target-hit {
+    0% {
+        background: var(--accent-1);
+        box-shadow: 0 0 0 0 rgba(32, 178, 171, .7);
+        transform: translateX(-50%) scale(1);
+    }
+    45% {
+        background: #20b2ab;
+        box-shadow: 0 0 0 .7rem rgba(32, 178, 171, .25);
+        transform: translateX(-50%) scale(1.2);
+    }
+    100% {
+        background: rgba(201, 211, 154, .2);
+        box-shadow: 0 0 0 0 rgba(32, 178, 171, 0);
+        transform: translateX(-50%) scale(1);
+    }
+}
 
         .rhythm-note {
             position: absolute;
@@ -809,7 +954,7 @@ button:disabled {
             width: 2.5rem;
             height: 2.5rem;
             border: 3px solid var(--accent-2);
-            border-radius: .5rem;
+    border-radius: 50%;
             background: var(--accent-1);
             box-shadow: 0 .2rem 0 var(--accent-2);
             transform: translateX(-50%);
@@ -825,6 +970,12 @@ button:disabled {
 
         #rhythm-start {
             min-width: 10rem;
+        }
+
+        .rhythm-game + #rhythm-continue {
+            display: inline-block;
+            visibility: visible;
+            margin: 0 auto 3rem;
         }
 
         @media (max-width: 520px) {
@@ -929,10 +1080,17 @@ button:disabled {
             font-size: 1.15rem;
             font-weight: 700;
         }
+
+        .signature-page + #signature-continue {
+            display: inline-block;
+            visibility: visible;
+            margin: 0 auto 3rem;
+        }
 /* #endregion */ 
 
 /* #region Movie Level */ 
         .movie-page {
+            position: relative;
             width: min(94%, 58rem);
             margin: 0 auto 3rem;
             padding: clamp(1.25rem, 4vw, 2rem);
@@ -989,6 +1147,52 @@ button:disabled {
             color: var(--accent-2);
             font-size: 1.1rem;
         }
+
+        .movie-fast-forward {
+            position: absolute;
+            right: 1rem;
+            bottom: 1rem;
+            width: 2rem;
+            height: 2rem;
+            padding: 0;
+            border: 2px solid var(--accent-2);
+            border-radius: .35rem;
+            background: var(--accent-1);
+            color: var(--accent-2);
+            cursor: pointer;
+            font: 1.25rem "Archivo Black", sans-serif;
+            line-height: 1;
+        }
+
+        .movie-fast-forward::after {
+            position: absolute;
+            right: 0;
+            bottom: calc(100% + .5rem);
+            width: max-content;
+            max-width: 12rem;
+            padding: .45rem .6rem;
+            border-radius: .35rem;
+            background: var(--accent-2);
+            color: white;
+            content: attr(data-tooltip);
+            font: 1rem "Barlow Condensed", sans-serif;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(.25rem);
+            transition: opacity .2s ease, transform .2s ease;
+        }
+
+        .movie-fast-forward:hover::after,
+        .movie-fast-forward:focus-visible::after {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .movie-page + #movie-continue {
+            display: inline-block;
+            visibility: visible;
+            margin: 0 auto 3rem;
+        }
 /* #endregion */
 
 /* #region Captcha Level */ 
@@ -1040,12 +1244,14 @@ button:disabled {
         }
 
         .captcha-form input {
-            width: 100%;
+            width: min(100%, 16rem);
+            justify-self: center;
             padding: .75rem 1rem;
             border: 2px solid var(--accent-2);
             border-radius: .5rem;
             color: var(--font);
             font: 1.2rem "Barlow Condensed", sans-serif;
+            text-align: center;
         }
 
         .captcha-form button {
@@ -1067,5 +1273,25 @@ button:disabled {
         .captcha-message.is-error {
             color: #9b2727;
         }
+
+        .captcha-page + #captcha-continue {
+            display: inline-block;
+            visibility: visible;
+            margin: 0 auto 3rem;
+        }
+/* #endregion */
+
+/* #region Wordle Level */
+wordle-for-good {
+    display: block !important;
+}
+
+.wordle-result {
+    display: none;
+}
+
+#wordle-continue {
+    margin-top: 1.5rem;
+}
 /* #endregion */
 

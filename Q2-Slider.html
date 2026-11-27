@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>EmeraldCorps Slider Survey</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -13,17 +13,61 @@
 <body>
     <header>
         <nav>
-            <a href="#about-section">About</a>
-            <a href="#portfolio-section">Work</a>
-            <a href="#contact-section">Contact</a>
+            <a href="index.html">Application</a>
+            <a href="Q1-Choices.html">Quiz</a>
         </nav>
-<h1>&nbsp;&nbsp;EmeraldCorps&nbsp;&nbsp;</h1>
+        <h1>EmeraldCorps</h1>
     </header>
-<main class="input-section">
 
-</main>
+    <main class="slider-survey" id="slider-survey">
+        <div class="survey-heading">
+            <p class="eyebrow">EmeraldCorps application</p>
+            <h2>Placeholder survey</h2>
+            <p>Use each slider to choose a response from 1 to 10.</p>
+        </div>
+
+        <form id="slider-survey-form" class="slider-card">
+            <div class="slider-group" data-correct="1" data-tooltip="Choose a value from 1 to 10.">
+                <label for="survey-question-1"><span>01</span> Placeholder question 1</label>
+                <div class="slider-labels"><span>1</span><output id="survey-question-1-output" for="survey-question-1">5</output><span>10</span></div>
+                <input id="survey-question-1" name="survey-question-1" type="range" min="1" max="10" value="5" required>
+            </div>
+            <div class="slider-group" data-correct="10" data-tooltip="Choose a value from 1 to 10.">
+                <label for="survey-question-2"><span>02</span> Placeholder question 2</label>
+                <div class="slider-labels"><span>1</span><output id="survey-question-2-output" for="survey-question-2">5</output><span>10</span></div>
+                <input id="survey-question-2" name="survey-question-2" type="range" min="1" max="10" value="5" required>
+            </div>
+            <div class="slider-group" data-correct="10" data-tooltip="Choose a value from 1 to 10.">
+                <label for="survey-question-3"><span>03</span> Placeholder question 3</label>
+                <div class="slider-labels"><span>1</span><output id="survey-question-3-output" for="survey-question-3">5</output><span>10</span></div>
+                <input id="survey-question-3" name="survey-question-3" type="range" min="1" max="10" value="5" required>
+            </div>
+            <div class="slider-group" data-correct="1" data-tooltip="Choose a value from 1 to 10.">
+                <label for="survey-question-4"><span>04</span> Placeholder question 4</label>
+                <div class="slider-labels"><span>1</span><output id="survey-question-4-output" for="survey-question-4">5</output><span>10</span></div>
+                <input id="survey-question-4" name="survey-question-4" type="range" min="1" max="10" value="5" required>
+            </div>
+            <div class="slider-group" data-correct="1" data-tooltip="Choose a value from 1 to 10.">
+                <label for="survey-question-5"><span>05</span> Placeholder question 5</label>
+                <div class="slider-labels"><span>1</span><output id="survey-question-5-output" for="survey-question-5">5</output><span>10</span></div>
+                <input id="survey-question-5" name="survey-question-5" type="range" min="1" max="10" value="5" required>
+            </div>
+            <div class="slider-group" data-correct="10" data-tooltip="Choose a value from 1 to 10.">
+                <label for="survey-question-6"><span>06</span> Placeholder question 6</label>
+                <div class="slider-labels"><span>1</span><output id="survey-question-6-output" for="survey-question-6">5</output><span>10</span></div>
+                <input id="survey-question-6" name="survey-question-6" type="range" min="1" max="10" value="5" required>
+            </div>
+            <div class="slider-group" data-correct="1" data-tooltip="Choose a value from 1 to 10.">
+                <label for="survey-question-7"><span>07</span> Placeholder question 7</label>
+                <div class="slider-labels"><span>1</span><output id="survey-question-7-output" for="survey-question-7">5</output><span>10</span></div>
+                <input id="survey-question-7" name="survey-question-7" type="range" min="1" max="10" value="5" required>
+            </div>
+            <p id="slider-survey-message" class="slider-survey-message" role="status" aria-live="polite"></p>
+        </form>
+        <button type="submit" id="slider-survey-continue" class="button" form="slider-survey-form">Continue</button>
+    </main>
     <footer>
-<p>&copy; 2025 Jon-Jon Rodriguez</p>        
+        <p>&copy; 2025 Jon-Jon Rodriguez</p>
     </footer>
     <script src="js/main.js"></script>
 </body>

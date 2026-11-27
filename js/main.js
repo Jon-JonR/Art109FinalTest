@@ -17,9 +17,37 @@ if (contractCheckbox && continueButton) {
     });
 }
 
+// #region Choice level // 
 const quizForm = document.getElementById('quiz-form');
 
-if (quizForm) {
+if (quizForm && quizForm.dataset.layout === 'all-at-once') {
+    const allAtOnceQuestions = [...quizForm.querySelectorAll('.quiz-question')];
+    const allAtOnceMessage = document.getElementById('quiz-message');
+
+    quizForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const unanswered = allAtOnceQuestions.find(question => !question.querySelector('input:checked'));
+
+        if (unanswered) {
+            allAtOnceMessage.textContent = `Please answer question ${unanswered.dataset.question} before submitting.`;
+            unanswered.querySelector('input').focus();
+            return;
+        }
+
+        const correctAnswers = allAtOnceQuestions.filter(question => {
+            return question.querySelector('input:checked').value === question.dataset.correct;
+        }).length;
+
+        if (correctAnswers === allAtOnceQuestions.length) {
+            window.location.href = 'Q2-Slider.html';
+            return;
+        }
+
+        allAtOnceMessage.textContent = `You got ${correctAnswers} of ${allAtOnceQuestions.length} correct. Review your answers and try again.`;
+    });
+}
+
+if (quizForm && quizForm.dataset.layout !== 'all-at-once') {
     const questions = [...quizForm.querySelectorAll('.quiz-question')];
     const counter = document.getElementById('question-counter');
     const progressBar = document.getElementById('progress-bar');
@@ -115,33 +143,140 @@ if (quizForm) {
 
     showQuestion(0);
 }
+
+// #endregion Choice level // 
+
+//#region Slider Level //
+const sliderSurvey = document.getElementById('slider-survey-form');
+
+if (sliderSurvey) {
+    const surveySliders = [...sliderSurvey.querySelectorAll('input[type="range"]')];
+    const surveyGroups = [...sliderSurvey.querySelectorAll('.slider-group')];
+    const surveyMessage = document.getElementById('slider-survey-message');
+
+    surveySliders.forEach((slider) => {
+        const output = document.getElementById(`${slider.id}-output`);
+        slider.addEventListener('input', () => {
+            output.textContent = slider.value;
+        });
+    });
+
+    sliderSurvey.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const allAnswersCorrect = surveyGroups.every((group) => {
+            const slider = group.querySelector('input[type="range"]');
+            return slider && (slider.value === '1' || slider.value === '10') && slider.value === group.dataset.correct;
+        });
+
+        if (!allAnswersCorrect) {
+            window.location.href = 'Message.html';
+            return;
+        }
+
+        window.location.href = 'Q3-Wordle.html';
+    });
+}
+
+const wordleGame = document.querySelector('wordle-for-good');
+
+if (wordleGame) {
+    const wordleSuccess = document.getElementById('success');
+    const wordleFailure = document.getElementById('failure');
+    const wordleContinue = document.getElementById('wordle-continue');
+    wordleContinue.disabled = true;
+
+    function isVisible(element) {
+        return element
+            && element.getAttribute('aria-hidden') !== 'true'
+            && window.getComputedStyle(element).display !== 'none';
+    }
+
+    function updateWordleResult() {
+        wordleGame.hidden = false;
+
+        if (isVisible(wordleFailure)) {
+            window.location.href = 'Message.html';
+            return;
+        }
+
+        if (isVisible(wordleSuccess)) {
+            wordleContinue.disabled = false;
+        }
+    }
+
+    const wordleObserver = new MutationObserver(updateWordleResult);
+    wordleObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['hidden', 'aria-hidden', 'style', 'class'],
+        childList: true,
+        subtree: true
+    });
+
+    wordleContinue.addEventListener('click', () => {
+        window.location.href = 'Q4-Slots.html';
+    });
+}
+// #endregion //
+
 // #region Slot Machine Level //
-const spinButton = document.getElementById('spin-button');
+const spinButton = document.getElementById('q4-slot-spin-button') || document.getElementById('spin-button');
 
 if (spinButton) {
-    const symbols = ['🍒', '⭐', '💎', '🍀', '🔔', '🍋'];
+    const symbols = ['\uD83C\uDF52', '\u2B50', '\uD83D\uDC8E', '\uD83C\uDF40', '\uD83D\uDD14', '\uD83C\uDF4B'];
     const reels = [...document.querySelectorAll('.slot-reel')];
-    const slotMessage = document.getElementById('slot-message');
+    const reelSymbols = reels.map((reel) => reel.querySelector('.slot-symbol') || reel);
+    const slotMessage = document.getElementById('q4-slot-message') || document.getElementById('slot-message');
+    const continueButton = document.getElementById('q4-slot-continue');
+    let spinCount = 0;
+
+    if (continueButton) {
+        continueButton.hidden = false;
+        continueButton.disabled = true;
+    }
+
+    function getSpinResult() {
+        spinCount += 1;
+        const guaranteedWinWindow = spinCount >= 20 && Math.random() < .9;
+
+        if (guaranteedWinWindow) {
+            return ['\u2B50', '\u2B50', '\u2B50'];
+        }
+
+        const result = reels.map(() => symbols[Math.floor(Math.random() * symbols.length)]);
+        if (result.every((symbol) => symbol === '\u2B50')) {
+            result[result.length - 1] = '\uD83C\uDF52';
+        }
+        return result;
+    }
 
     spinButton.addEventListener('click', () => {
         spinButton.disabled = true;
         slotMessage.textContent = 'Spinning...';
-        reels.forEach((reel) => reel.classList.add('is-spinning'));
+        reelSymbols.forEach((symbol) => symbol.classList.add('is-spinning'));
 
         window.setTimeout(() => {
-            const result = reels.map((reel) => {
-                const symbol = symbols[Math.floor(Math.random() * symbols.length)];
-                reel.textContent = symbol;
-                reel.classList.remove('is-spinning');
-                return symbol;
+            const result = getSpinResult();
+            result.forEach((symbol, index) => {
+                reelSymbols[index].textContent = symbol;
+                reelSymbols[index].classList.remove('is-spinning');
             });
 
-            slotMessage.textContent = result.every((symbol) => symbol === result[0])
-                ? 'Jackpot!'
-                : 'Thanks for spinning!';
+            const isTripleStar = result.every((symbol) => symbol === '\u2B50');
+            slotMessage.textContent = isTripleStar ? 'Triple star! Jackpot!' : 'Thanks for spinning!';
+            if (isTripleStar && continueButton) {
+                continueButton.hidden = false;
+                continueButton.disabled = false;
+            }
             spinButton.disabled = false;
         }, 900);
     });
+
+    if (continueButton) {
+        continueButton.addEventListener('click', () => {
+            window.location.href = 'Q5-Minecraft.html';
+        });
+    }
 }
 
 // #endregion //
@@ -156,6 +291,12 @@ if (spinButton) {
         const rhythmMessage = document.getElementById("rhythm-message");
         const rhythmHealthFill = document.getElementById("rhythm-health-fill");
         const rhythmHealthText = document.getElementById("rhythm-health-text");
+        const rhythmContinue = document.getElementById("rhythm-continue");
+
+        if (rhythmContinue) {
+            rhythmContinue.hidden = false;
+            rhythmContinue.disabled = true;
+        }
 
         let rhythmPlaying = false;
         let rhythmHealth = 100;
@@ -201,6 +342,16 @@ if (spinButton) {
             rhythmNotes = rhythmNotes.filter(activeNote => activeNote !== note);
         }
 
+        function animateRhythmHit(laneIndex) {
+            const target = rhythmLanes[laneIndex].querySelector(".rhythm-target");
+            if (!target) return;
+
+            target.classList.remove("is-hit");
+            void target.offsetWidth;
+            target.classList.add("is-hit");
+            window.setTimeout(() => target.classList.remove("is-hit"), 300);
+        }
+
         function endRhythmGame(lost) {
             if (!rhythmPlaying) return;
             rhythmPlaying = false;
@@ -218,6 +369,9 @@ if (spinButton) {
             } else {
                 rhythmMessage.textContent = `Nice rhythm! Final score: ${rhythmPoints}.`;
                 rhythmStart.textContent = "Play Again";
+                if (rhythmContinue && rhythmHealth > 0) {
+                    rhythmContinue.disabled = false;
+                }
             }
         }
 
@@ -233,7 +387,9 @@ if (spinButton) {
             rhythmNotes.slice().forEach(note => {
                 const age = now - note.spawnTime;
                 const progress = age / rhythmTravelTime;
-                note.element.style.top = `${progress * (boardHeight - 70)}px`;
+                const target = rhythmLanes[note.laneIndex].querySelector(".rhythm-target");
+                const targetTop = target ? target.offsetTop : boardHeight - 70;
+                note.element.style.top = `${progress * targetTop}px`;
 
                 if (age > rhythmTravelTime + rhythmHitWindow) {
                     updateRhythmHealth(10);
@@ -255,6 +411,7 @@ if (spinButton) {
             rhythmLastSpawn = rhythmStartTime;
             rhythmStart.disabled = true;
             rhythmStart.textContent = "Playing...";
+            if (rhythmContinue) rhythmContinue.disabled = true;
             rhythmScore.textContent = "Score: 0";
             rhythmTime.textContent = "Time: 30s";
             rhythmMessage.textContent = "Follow the beat!";
@@ -287,6 +444,7 @@ if (spinButton) {
                 rhythmPoints += 10;
                 rhythmScore.textContent = `Score: ${rhythmPoints}`;
                 rhythmMessage.textContent = "Great hit!";
+                animateRhythmHit(laneIndex);
                 removeRhythmNote(note);
             } else {
                 updateRhythmHealth(15);
@@ -294,18 +452,36 @@ if (spinButton) {
             }
         });
 
-        rhythmStart.addEventListener("click", startRhythmGame);
+        if (rhythmStart) {
+            rhythmStart.addEventListener("click", startRhythmGame);
+        }
+
+        if (rhythmContinue) {
+            rhythmContinue.addEventListener("click", () => {
+                if (rhythmHealth > 0 && !rhythmPlaying && rhythmSeconds <= 0) {
+                    window.location.href = "Q7-Signature.html";
+                }
+            });
+        }
 // #endregion //
 
 // #region Signature Level //
         const signatureCanvas = document.getElementById("signature-canvas");
+if (signatureCanvas) {
         const signatureCanvasWrap = document.querySelector(".signature-canvas-wrap");
         const signaturePenTrigger = document.getElementById("signature-pen-trigger");
         const signatureActivePen = document.getElementById("signature-pen-active");
         const signatureStatus = document.getElementById("signature-status");
+        const signatureContinue = document.getElementById("signature-continue");
         const signatureContext = signatureCanvas.getContext("2d");
         let signaturePenEnabled = false;
         let signatureDrawing = false;
+        let signatureHasDrawn = false;
+
+        if (signatureContinue) {
+            signatureContinue.hidden = false;
+            signatureContinue.disabled = true;
+        }
 
         function resizeSignatureCanvas() {
             const previousImage = signatureCanvas.width && signatureCanvas.height
@@ -355,6 +531,8 @@ if (spinButton) {
         signatureCanvas.addEventListener("pointerdown", event => {
             if (!signaturePenEnabled) return;
             signatureDrawing = true;
+            signatureHasDrawn = true;
+            if (signatureContinue) signatureContinue.disabled = false;
             signatureCanvas.setPointerCapture(event.pointerId);
             const point = canvasPoint(event);
             signatureContext.beginPath();
@@ -385,16 +563,30 @@ if (spinButton) {
         signatureCanvas.addEventListener("pointercancel", stopSignatureDrawing);
         window.addEventListener("resize", resizeSignatureCanvas);
         resizeSignatureCanvas();
+
+        if (signatureContinue) {
+            signatureContinue.addEventListener("click", () => {
+                if (signatureHasDrawn) {
+                    window.location.href = "Q8-Movie.html";
+                }
+            });
+        }
+}
 // #endregion //
 
 // #region Movie Level //
 
         const movieTimer = document.getElementById("movie-timer");
+if (movieTimer) {
         const movieStatus = document.getElementById("movie-status");
+        const movieContinue = document.getElementById("movie-continue");
+        const movieFastForward = document.getElementById("movie-fast-forward");
         const movieTotalSeconds = 1 * 60 * 60 + 33 * 60 + 40;
-        let movieRemainingSeconds = movieTotalSeconds;
+        let movieDurationSeconds = movieTotalSeconds;
+        let movieRemainingSeconds = movieDurationSeconds;
         let moviePlayer = null;
         let movieTimestampSync = null;
+        let movieFastForwardTimer = null;
 
         function formatMovieTime(totalSeconds) {
             const hours = Math.floor(totalSeconds / 3600);
@@ -412,20 +604,42 @@ if (spinButton) {
         function syncMovieTimerToVideo() {
             if (!moviePlayer || typeof moviePlayer.getCurrentTime !== "function") return;
 
+            const videoDuration = moviePlayer.getDuration();
+            if (videoDuration > 0) {
+                movieDurationSeconds = Math.floor(videoDuration);
+            }
+
             const videoTimestamp = Math.floor(moviePlayer.getCurrentTime());
-            movieRemainingSeconds = Math.max(0, movieTotalSeconds - videoTimestamp);
+            movieRemainingSeconds = Math.max(0, movieDurationSeconds - videoTimestamp);
             renderMovieTimer();
 
             if (movieRemainingSeconds === 0) {
-                movieStatus.textContent = "Time is up.";
+                finishMovie();
+            }
+        }
+
+        function finishMovie() {
+            movieRemainingSeconds = 0;
+            renderMovieTimer();
+            movieStatus.textContent = "Movie complete. You may continue.";
+            if (movieContinue) movieContinue.disabled = false;
+            if (movieTimestampSync) clearInterval(movieTimestampSync);
+            stopMovieFastForward();
+            if (moviePlayer && typeof moviePlayer.pauseVideo === "function") {
                 moviePlayer.pauseVideo();
             }
         }
 
-        function onYouTubeIframeAPIReady() {
+        window.onYouTubeIframeAPIReady = function () {
             moviePlayer = new YT.Player("movie-video", {
                 events: {
                     onReady() {
+                        const videoDuration = moviePlayer.getDuration();
+                        if (videoDuration > 0) {
+                            movieDurationSeconds = Math.floor(videoDuration);
+                            movieRemainingSeconds = movieDurationSeconds;
+                            renderMovieTimer();
+                        }
                         syncMovieTimerToVideo();
                         movieTimestampSync = setInterval(syncMovieTimerToVideo, 250);
                     },
@@ -441,23 +655,79 @@ if (spinButton) {
                             syncMovieTimerToVideo();
                         } else if (event.data === YT.PlayerState.ENDED) {
                             movieStatus.textContent = "Video ended.";
-                            syncMovieTimerToVideo();
+                            finishMovie();
                         }
                     }
                 }
             });
+        };
+
+        function fastForwardMovie() {
+            if (movieRemainingSeconds === 0) return;
+
+            if (!moviePlayer || typeof moviePlayer.getCurrentTime !== "function") {
+                movieRemainingSeconds = Math.max(0, movieRemainingSeconds - 10);
+                renderMovieTimer();
+                if (movieRemainingSeconds === 0) finishMovie();
+                return;
+            }
+
+            const currentTime = moviePlayer.getCurrentTime();
+            const nextTime = Math.min(movieDurationSeconds, currentTime + 10);
+
+            if (typeof moviePlayer.seekTo === "function") {
+                moviePlayer.seekTo(nextTime, true);
+            }
+            syncMovieTimerToVideo();
+        }
+
+        function stopMovieFastForward() {
+            if (movieFastForwardTimer) {
+                clearInterval(movieFastForwardTimer);
+                movieFastForwardTimer = null;
+            }
+        }
+
+        if (movieContinue) {
+            movieContinue.hidden = false;
+            movieContinue.disabled = true;
+            movieContinue.addEventListener("click", () => {
+                if (movieRemainingSeconds === 0) {
+                    window.location.href = "Q9-Captcha.html";
+                }
+            });
+        }
+
+        if (movieFastForward) {
+            movieFastForward.addEventListener("pointerdown", event => {
+                event.preventDefault();
+                fastForwardMovie();
+                stopMovieFastForward();
+                movieFastForwardTimer = setInterval(fastForwardMovie, 150);
+            });
+            window.addEventListener("pointerup", stopMovieFastForward);
+            movieFastForward.addEventListener("pointerleave", stopMovieFastForward);
+            movieFastForward.addEventListener("pointercancel", stopMovieFastForward);
         }
 
         renderMovieTimer();
+}
 
 // #endregion /
 
 // #region Captcha Level //
 
         const captchaForm = document.getElementById("captcha-form");
+if (captchaForm) {
         const captchaAnswer = document.getElementById("captcha-answer");
         const captchaMessage = document.getElementById("captcha-message");
+        const captchaContinue = document.getElementById("captcha-continue");
         const captchaSolution = "Imascam";
+
+        if (captchaContinue) {
+            captchaContinue.hidden = false;
+            captchaContinue.disabled = true;
+        }
 
         captchaForm.addEventListener("submit", event => {
             event.preventDefault();
@@ -472,10 +742,23 @@ if (spinButton) {
             if (isCorrect) {
                 captchaAnswer.disabled = true;
                 captchaForm.querySelector("button").disabled = true;
+                if (captchaContinue) captchaContinue.disabled = false;
             } else {
                 captchaAnswer.focus();
                 captchaAnswer.select();
             }
         });
 
+        if (captchaContinue) {
+            captchaContinue.addEventListener("click", () => {
+                if (captchaContinue.disabled) return;
+                window.location.href = "Q10-.html";
+            });
+        }
+}
+
 // #endregion //
+
+// #region Wordle Level //
+
+// #endregion Wordle Level //

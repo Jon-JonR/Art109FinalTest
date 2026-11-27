@@ -6,7 +6,7 @@
     <title>EmeraldCorps Quiz</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -22,67 +22,70 @@
         <div class="quiz-heading">
             <p class="eyebrow">EmeraldCorps application</p>
             <h2>Knowledge check</h2>
-            <p>Answer each question to continue.</p>
+            <p>Answer all seven questions, then submit your answers.</p>
         </div>
 
-        <form id="quiz-form" class="quiz-card">
-            <!-- QUESTION 1: Replace the text and answer labels below. Keep the data-question number. -->
-            <fieldset class="quiz-question is-active" data-question="1">
+        <form id="quiz-form" class="quiz-card all-at-once-quiz" data-layout="all-at-once">
+            <fieldset class="quiz-question" data-question="1" data-correct="A">
                 <legend><span>01</span> Are you a human being, capable of making decisions?</legend>
                 <label><input type="radio" name="question-1" value="A"> Yes, I am a human</label>
                 <label><input type="radio" name="question-1" value="B"> No, I am a robot</label>
-                <label><input type="radio" name="question-1" value="C"> I rather not answer.</label>
+                <label><input type="radio" name="question-1" value="C"> I am not sure</label>
+                <label><input type="radio" name="question-1" value="D"> I would rather not answer</label>
             </fieldset>
 
-            <!-- QUESTION 2: Replace the text and answer labels below. Keep the data-question number. -->
-            <fieldset class="quiz-question" data-question="2">
-                <legend><span>02</span> Replace this with question two.</legend>
-                <label><input type="radio" name="question-2" value="A"> Answer choice A</label>
-                <label><input type="radio" name="question-2" value="B"> Answer choice B</label>
-                <label><input type="radio" name="question-2" value="C"> Answer choice C</label>
+            <fieldset class="quiz-question" data-question="2" data-correct="B">
+                <legend><span>02</span> Which answer best describes teamwork?</legend>
+                <label><input type="radio" name="question-2" value="A"> Working alone every time</label>
+                <label><input type="radio" name="question-2" value="B"> Collaborating toward a shared goal</label>
+                <label><input type="radio" name="question-2" value="C"> Avoiding all feedback</label>
+                <label><input type="radio" name="question-2" value="D"> Letting one person do everything</label>
             </fieldset>
 
-            <!-- QUESTION 3: Replace the text and answer labels below. Keep the data-question number. -->
-            <fieldset class="quiz-question" data-question="3">
-                <legend><span>03</span> Replace this with question three.</legend>
-                <label><input type="radio" name="question-3" value="A"> Answer choice A</label>
-                <label><input type="radio" name="question-3" value="B"> Answer choice B</label>
-                <label><input type="radio" name="question-3" value="C"> Answer choice C</label>
+            <fieldset class="quiz-question" data-question="3" data-correct="C">
+                <legend><span>03</span> What is the best first step when solving a problem?</legend>
+                <label><input type="radio" name="question-3" value="A"> Ignore the problem</label>
+                <label><input type="radio" name="question-3" value="B"> Guess without looking at the details</label>
+                <label><input type="radio" name="question-3" value="C"> Understand the problem and its requirements</label>
+                <label><input type="radio" name="question-3" value="D"> Blame someone else</label>
             </fieldset>
 
-            <!-- QUESTION 4: Replace the text and answer labels below. Keep the data-question number. -->
-            <fieldset class="quiz-question" data-question="4">
-                <legend><span>04</span> Replace this with question four.</legend>
-                <label><input type="radio" name="question-4" value="A"> Answer choice A</label>
-                <label><input type="radio" name="question-4" value="B"> Answer choice B</label>
-                <label><input type="radio" name="question-4" value="C"> Answer choice C</label>
+            <fieldset class="quiz-question" data-question="4" data-correct="D">
+                <legend><span>04</span> Which quality helps an applicant learn from mistakes?</legend>
+                <label><input type="radio" name="question-4" value="A"> Stubbornness</label>
+                <label><input type="radio" name="question-4" value="B"> Carelessness</label>
+                <label><input type="radio" name="question-4" value="C"> Avoidance</label>
+                <label><input type="radio" name="question-4" value="D"> Adaptability</label>
             </fieldset>
 
-            <!-- QUESTION 5: Replace the text and answer labels below. Keep the data-question number. -->
-            <fieldset class="quiz-question" data-question="5">
-                <legend><span>05</span> Replace this with question five.</legend>
-                <label><input type="radio" name="question-5" value="A"> Answer choice A</label>
-                <label><input type="radio" name="question-5" value="B"> Answer choice B</label>
-                <label><input type="radio" name="question-5" value="C"> Answer choice C</label>
+            <fieldset class="quiz-question" data-question="5" data-correct="A">
+                <legend><span>05</span> What should you do if instructions are unclear?</legend>
+                <label><input type="radio" name="question-5" value="A"> Ask a clarifying question</label>
+                <label><input type="radio" name="question-5" value="B"> Make up a completely different task</label>
+                <label><input type="radio" name="question-5" value="C"> Stop without communicating</label>
+                <label><input type="radio" name="question-5" value="D"> Hide the confusion</label>
             </fieldset>
 
-            <div class="quiz-progress" aria-live="polite">
-                <span id="question-counter">Question 1 of 5</span>
-                <div class="progress-track"><div id="progress-bar"></div></div>
-            </div>
+            <fieldset class="quiz-question" data-question="6" data-correct="B">
+                <legend><span>06</span> Which action demonstrates responsibility?</legend>
+                <label><input type="radio" name="question-6" value="A"> Missing a deadline without notice</label>
+                <label><input type="radio" name="question-6" value="B"> Communicating early about a delay</label>
+                <label><input type="radio" name="question-6" value="C"> Deleting unfinished work</label>
+                <label><input type="radio" name="question-6" value="D"> Ignoring messages</label>
+            </fieldset>
+
+            <fieldset class="quiz-question" data-question="7" data-correct="C">
+                <legend><span>07</span> What is a strong way to improve your work?</legend>
+                <label><input type="radio" name="question-7" value="A"> Refuse all feedback</label>
+                <label><input type="radio" name="question-7" value="B"> Repeat the same approach forever</label>
+                <label><input type="radio" name="question-7" value="C"> Review results and make thoughtful changes</label>
+                <label><input type="radio" name="question-7" value="D"> Avoid checking the final result</label>
+            </fieldset>
 
             <p id="quiz-message" class="quiz-message" role="alert"></p>
-            <div class="quiz-controls">
-                <button type="button" id="previous-question" class="secondary-button" disabled>Previous</button>
-                <button type="button" id="next-question">Next question</button>
-            </div>
         </form>
+        <button type="submit" id="choice-continue" class="button" form="quiz-form">Continue</button>
 
-        <section id="quiz-complete" class="quiz-complete" hidden>
-            <p class="eyebrow">Complete</p>
-            <h2>Thanks for completing the quiz!</h2>
-            <button type="button" id="restart-quiz">Start over</button>
-        </section>
     </main>
 
     <footer>

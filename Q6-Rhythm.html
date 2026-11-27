@@ -21,7 +21,7 @@
 <main class="input-section">
     <section class="rhythm-game" aria-labelledby="rhythm-title">
         <h2 id="rhythm-title">Rhythm Challenge</h2>
-        <p class="rhythm-instructions">Press D, F, J, or K when a note reaches the line.</p>
+        <p class="rhythm-instructions">Press D, F, J, or K when a note overlays its matching circle.</p>
 
         <div class="rhythm-stats">
             <span id="rhythm-time">Time: 30s</span>
@@ -39,15 +39,16 @@
         </div>
 
         <div class="rhythm-board" id="rhythm-board" aria-label="Rhythm game board">
-            <div class="rhythm-lane" data-key="d"><div class="rhythm-hit-line"></div><div class="rhythm-lane-key">D</div></div>
-            <div class="rhythm-lane" data-key="f"><div class="rhythm-hit-line"></div><div class="rhythm-lane-key">F</div></div>
-            <div class="rhythm-lane" data-key="j"><div class="rhythm-hit-line"></div><div class="rhythm-lane-key">J</div></div>
-            <div class="rhythm-lane" data-key="k"><div class="rhythm-hit-line"></div><div class="rhythm-lane-key">K</div></div>
+            <div class="rhythm-lane" data-key="d"><div class="rhythm-target" aria-hidden="true"></div><div class="rhythm-lane-key">D</div></div>
+            <div class="rhythm-lane" data-key="f"><div class="rhythm-target" aria-hidden="true"></div><div class="rhythm-lane-key">F</div></div>
+            <div class="rhythm-lane" data-key="j"><div class="rhythm-target" aria-hidden="true"></div><div class="rhythm-lane-key">J</div></div>
+            <div class="rhythm-lane" data-key="k"><div class="rhythm-target" aria-hidden="true"></div><div class="rhythm-lane-key">K</div></div>
         </div>
 
         <p class="rhythm-message" id="rhythm-message" role="status">Press Start when you are ready.</p>
         <button type="button" id="rhythm-start">Start Game</button>
     </section>
+    <button type="button" id="rhythm-continue" class="button" disabled>Continue</button>
 </main>
     <footer>
 <p>&copy; 2025 Jon-Jon Rodriguez</p>        

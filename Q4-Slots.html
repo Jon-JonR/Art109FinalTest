@@ -23,48 +23,18 @@
     <section class="slot-machine" aria-labelledby="slot-machine-title">
         <h2 id="slot-machine-title">Mini Slot Machine</h2>
         <div class="slot-reels" aria-live="polite">
-            <div class="slot-reel" id="q4-slot-reel-1">🍒</div>
-            <div class="slot-reel" id="q4-slot-reel-2">⭐</div>
-            <div class="slot-reel" id="q4-slot-reel-3">💎</div>
+                <div class="slot-reel" id="q4-slot-reel-1"><span class="slot-symbol">🍒</span></div>
+                <div class="slot-reel" id="q4-slot-reel-2"><span class="slot-symbol">⭐</span></div>
+                <div class="slot-reel" id="q4-slot-reel-3"><span class="slot-symbol">💎</span></div>
         </div>
         <button type="button" id="q4-slot-spin-button">Spin</button>
         <p class="slot-message" id="q4-slot-message" role="status">Try your luck!</p>
     </section>
+    <button type="button" id="q4-slot-continue" class="button" disabled>Continue</button>
 </main>
     <footer>
 <p>&copy; 2025 Jon-Jon Rodriguez</p>        
     </footer>
     <script src="js/main.js"></script>
-
-    <!-- SLOT MACHINE SCRIPT: Move this block to main.js when you are ready. -->
-    <script>
-        const q4SpinButton = document.getElementById('q4-slot-spin-button');
-
-        if (q4SpinButton) {
-            const q4Symbols = ['🍒', '⭐', '💎', '🍀', '🔔', '🍋'];
-            const q4Reels = [...document.querySelectorAll('.slot-reel')];
-            const q4Message = document.getElementById('q4-slot-message');
-
-            q4SpinButton.addEventListener('click', () => {
-                q4SpinButton.disabled = true;
-                q4Message.textContent = 'Spinning...';
-                q4Reels.forEach((reel) => reel.classList.add('is-spinning'));
-
-                window.setTimeout(() => {
-                    const result = q4Reels.map((reel) => {
-                        const symbol = q4Symbols[Math.floor(Math.random() * q4Symbols.length)];
-                        reel.textContent = symbol;
-                        reel.classList.remove('is-spinning');
-                        return symbol;
-                    });
-
-                    q4Message.textContent = result.every((symbol) => symbol === result[0])
-                        ? 'Jackpot!'
-                        : 'Thanks for spinning!';
-                    q4SpinButton.disabled = false;
-                }, 900);
-            });
-        }
-    </script>
 </body>
 </html>

@@ -1,3 +1,4 @@
+function initializeInteractiveLevels() {
 const textBoxes = document.querySelectorAll('input[type="text"], input[type="email"]');
 const contractCheckbox = document.getElementById('contract');
 const continueButton = document.getElementById('continue-button');
@@ -39,7 +40,7 @@ if (quizForm && quizForm.dataset.layout === 'all-at-once') {
         }).length;
 
         if (correctAnswers === allAtOnceQuestions.length) {
-            window.location.href = 'Q2-Slider.html';
+            advanceJobLevel('Q2-Slider.html');
             return;
         }
 
@@ -174,7 +175,7 @@ if (sliderSurvey) {
             return;
         }
 
-        window.location.href = 'Q3-Wordle.html';
+        advanceJobLevel('Q3-Wordle.html');
     });
 }
 
@@ -188,6 +189,7 @@ if (wordleGame) {
 
     function isVisible(element) {
         return element
+            && element.isConnected
             && element.getAttribute('aria-hidden') !== 'true'
             && window.getComputedStyle(element).display !== 'none';
     }
@@ -212,9 +214,10 @@ if (wordleGame) {
         childList: true,
         subtree: true
     });
+    updateWordleResult();
 
     wordleContinue.addEventListener('click', () => {
-        window.location.href = 'Q4-Slots.html';
+        advanceJobLevel('Q4-Slots.html');
     });
 }
 // #endregion //
@@ -263,7 +266,7 @@ if (spinButton) {
             });
 
             const isTripleStar = result.every((symbol) => symbol === '\u2B50');
-            slotMessage.textContent = isTripleStar ? 'Triple star! Jackpot!' : 'Thanks for spinning!';
+            slotMessage.textContent = isTripleStar ? 'Thank you, please continue.' : 'Rolling...';
             if (isTripleStar && continueButton) {
                 continueButton.hidden = false;
                 continueButton.disabled = false;
@@ -274,7 +277,7 @@ if (spinButton) {
 
     if (continueButton) {
         continueButton.addEventListener('click', () => {
-            window.location.href = 'Q5-Minecraft.html';
+            advanceJobLevel('Q5-Minecraft.html');
         });
     }
 }
@@ -459,7 +462,7 @@ if (spinButton) {
         if (rhythmContinue) {
             rhythmContinue.addEventListener("click", () => {
                 if (rhythmHealth > 0 && !rhythmPlaying && rhythmSeconds <= 0) {
-                    window.location.href = "Q7-Signature.html";
+                    advanceJobLevel("Q8-Movie.html");
                 }
             });
         }
@@ -525,7 +528,6 @@ if (signatureCanvas) {
             signatureActivePen.style.left = "50%";
             signatureActivePen.style.top = "50%";
             signatureActivePen.classList.add("is-visible");
-            signatureStatus.textContent = "Pen ready. Click and drag to draw.";
         });
 
         signatureCanvas.addEventListener("pointerdown", event => {
@@ -567,7 +569,7 @@ if (signatureCanvas) {
         if (signatureContinue) {
             signatureContinue.addEventListener("click", () => {
                 if (signatureHasDrawn) {
-                    window.location.href = "Q8-Movie.html";
+                    advanceJobLevel("Q9-Captcha.html");
                 }
             });
         }
@@ -662,6 +664,10 @@ if (movieTimer) {
             });
         };
 
+        if (window.YT && typeof window.YT.Player === "function") {
+            window.onYouTubeIframeAPIReady();
+        }
+
         function fastForwardMovie() {
             if (movieRemainingSeconds === 0) return;
 
@@ -693,7 +699,7 @@ if (movieTimer) {
             movieContinue.disabled = true;
             movieContinue.addEventListener("click", () => {
                 if (movieRemainingSeconds === 0) {
-                    window.location.href = "Q9-Captcha.html";
+                    advanceJobLevel("complete");
                 }
             });
         }
@@ -752,7 +758,7 @@ if (captchaForm) {
         if (captchaContinue) {
             captchaContinue.addEventListener("click", () => {
                 if (captchaContinue.disabled) return;
-                window.location.href = "Q10-.html";
+                advanceJobLevel("Q1-Choices.html");
             });
         }
 }
@@ -762,3 +768,82 @@ if (captchaForm) {
 // #region Wordle Level //
 
 // #endregion Wordle Level //
+}
+
+// #region Job Application Game //
+const jobGameLevel = document.getElementById('job-game-level');
+const jobGameOrder = [
+    'Q7-Signature.html',
+    'Q9-Captcha.html',
+    'Q1-Choices.html',
+    'Q2-Slider.html',
+    'Q3-Wordle.html',
+    'Q4-Slots.html',
+    'Q5-Minecraft.html',
+    'Q6-Rhythm.html',
+    'Q8-Movie.html'
+];
+
+function showJobGameComplete() {
+    jobGameLevel.className = 'job-game-complete';
+    jobGameLevel.innerHTML = `
+        <p class="eyebrow">EmeraldCorps application</p>
+        <h2>Application Complete</h2>
+        <p>You completed every level of the EmeraldCorps application.</p>
+    `;
+    document.getElementById('job-game-progress').textContent = 'All 9 levels complete';
+}
+
+function advanceJobLevel(targetPage) {
+    if (!jobGameLevel) {
+        window.location.href = targetPage === 'complete' ? 'Message.html' : targetPage;
+        return;
+    }
+
+    if (targetPage === 'complete') {
+        showJobGameComplete();
+        return;
+    }
+
+    loadJobGameLevel(targetPage);
+}
+
+async function loadJobGameLevel(pageName) {
+    const levelIndex = jobGameOrder.indexOf(pageName);
+    if (levelIndex === -1) return;
+
+    try {
+        const response = await fetch(pageName);
+        if (!response.ok) throw new Error(`Unable to load ${pageName}`);
+        const pageText = await response.text();
+        const pageDocument = new DOMParser().parseFromString(pageText, 'text/html');
+        const sourceMain = pageDocument.querySelector('main');
+
+        jobGameLevel.className = sourceMain.className;
+        jobGameLevel.innerHTML = sourceMain.innerHTML;
+        jobGameLevel.dataset.level = String(levelIndex + 1);
+        document.getElementById('job-game-progress').textContent = `Level ${levelIndex + 1} of ${jobGameOrder.length}`;
+        initializeInteractiveLevels();
+
+        if (pageName === 'Q5-Minecraft.html' && !document.querySelector('script[data-minecraft-game]')) {
+            const minecraftScript = document.createElement('script');
+            minecraftScript.src = 'js/minecraft.js';
+            minecraftScript.dataset.minecraftGame = 'true';
+            document.body.appendChild(minecraftScript);
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (error) {
+        jobGameLevel.innerHTML = '<p role="alert">This level could not be loaded. Please refresh and try again.</p>';
+        console.error(error);
+    }
+}
+
+initializeInteractiveLevels();
+
+if (jobGameLevel) {
+    loadJobGameLevel(jobGameOrder[0]);
+}
+
+// #endregion //
+

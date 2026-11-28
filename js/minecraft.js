@@ -123,7 +123,7 @@
                 hasWon = true;
                 active = false;
                 clearInterval(timer);
-                feedbackEl.textContent = `Crafted ${matched.name}! (+1)`;
+                feedbackEl.textContent = `You have successfully crafted the item, please continue`;
                 if (minecraftContinueButton) minecraftContinueButton.disabled = false;
                 clearGrid();
             } else {
@@ -177,6 +177,10 @@
         if (minecraftContinueButton) {
             minecraftContinueButton.addEventListener("click", () => {
                 if (!hasWon) return;
-                window.location.href = "Q6-Rhythm.html";
+                if (typeof advanceJobLevel === "function") {
+                    advanceJobLevel("Q6-Rhythm.html");
+                } else {
+                    window.location.href = "Q6-Rhythm.html";
+                }
             });
         }

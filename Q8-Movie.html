@@ -23,9 +23,13 @@
 <h1>&nbsp;&nbsp;EmeraldCorps&nbsp;&nbsp;</h1>
     </header>
 <main class="input-section">
-    <section class="movie-page" aria-labelledby="movie-title">
-        <h2 id="movie-title">To prove your timely loyalty to the company, please watch the entire "Meet the Robinsons," Movie.</h2>
+        <div class="survey-heading">
+            <p class="eyebrow">EmeraldCorps application</p>
+            <h2>Movie Survey</h2>
+            <p>Please watch the movie, "Meet the Robinsons," to continue your application.</p>
+        </div>
 
+        <div class="movie-page">
         <div class="movie-embed">
             <!-- Replace the video ID below if you want to feature a different movie. -->
             <iframe
@@ -41,7 +45,7 @@
         <div class="movie-timer" id="movie-timer" role="timer" aria-live="polite">01:33:40</div>
         <p class="movie-status" id="movie-status">Press play on the video to begin the timer.</p>
         <button type="button" id="movie-fast-forward" class="movie-fast-forward" data-tooltip="Hold to fast-forward" aria-label="Hold to fast-forward the movie">»</button>
-    </section>
+        </div>
     <button type="button" id="movie-continue" class="button" disabled>Continue</button>
 </main>
     <footer>

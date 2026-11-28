@@ -114,6 +114,32 @@ footer p {
     gap: 1.5rem;
 }
 
+.job-game-progress {
+    margin: 0 auto 1rem;
+    color: var(--accent-2);
+    font: 700 1.25rem "Barlow Condensed", sans-serif;
+    text-align: center;
+}
+
+.job-game-complete {
+    flex: 1;
+    width: min(90%, 44rem);
+    margin: 0 auto 3rem;
+    padding: clamp(1.5rem, 5vw, 3rem);
+    border: 3px solid var(--accent-2);
+    border-radius: 1rem;
+    background: rgba(201, 211, 154, .48);
+    box-shadow: 0 .35rem 0 var(--accent-2);
+    color: var(--font);
+    font-family: "Barlow Condensed", sans-serif;
+    text-align: center;
+}
+
+.job-game-complete h2 {
+    margin: .35rem 0 1rem;
+    font-family: "Archivo Black", sans-serif;
+}
+
 .input-section label {
     color: var(--font);
     font-family: "Barlow Condensed", sans-serif;
@@ -1112,6 +1138,7 @@ button:disabled {
         .movie-embed {
             position: relative;
             width: 100%;
+            margin: 0 auto;
             overflow: hidden;
             border: 3px solid var(--accent-2);
             border-radius: .75rem;

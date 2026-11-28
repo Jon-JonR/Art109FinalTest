@@ -266,7 +266,7 @@ if (spinButton) {
             });
 
             const isTripleStar = result.every((symbol) => symbol === '\u2B50');
-            slotMessage.textContent = isTripleStar ? 'Thank you, please continue.' : 'Rolling...';
+            slotMessage.textContent = isTripleStar ? 'Thank you, please continue.' : 'Please try again';
             if (isTripleStar && continueButton) {
                 continueButton.hidden = false;
                 continueButton.disabled = false;
@@ -699,7 +699,7 @@ if (movieTimer) {
             movieContinue.disabled = true;
             movieContinue.addEventListener("click", () => {
                 if (movieRemainingSeconds === 0) {
-                    advanceJobLevel("complete");
+                    window.location.href = "Message2.html";
                 }
             });
         }

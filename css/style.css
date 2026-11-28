@@ -61,7 +61,7 @@ nav {
 
 nav a {
     text-decoration: none;
-    color: var(--accent-1);
+    color: var(--accent-2);
     display: inline-block;
     margin: 5rem;
     transition: background-color .5s ease;
@@ -69,7 +69,7 @@ nav a {
 
 nav a:hover {
     background-color: var(--bg-color-2);
-    color: var(--accent-1);
+    color: var(--accent-2);
     transform: scale(1.3);
 }
 
@@ -600,12 +600,12 @@ button:disabled {
     right: 2rem;
     z-index: 10;
     max-width: min(85vw, 22rem);
-    padding: 1.35rem 1.6rem;
-    border: 2px solid var(--accent-2);
-    border-radius: .6rem;
-    background: var(--accent-1);
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border: 3px solid var(--accent-2);
+    border-radius: 1rem;
+    background: rgba(201, 211, 154, .48);
     color: var(--font);
-    box-shadow: 0 .35rem 1rem rgba(17, 17, 17, .2);
+    box-shadow: 0 .35rem 0 var(--accent-2);
     font: 1.35rem "Barlow Condensed", sans-serif;
     text-decoration: none;
     animation: slide-in-notification .55s ease-out both;

@@ -38,13 +38,14 @@ if (quizForm && quizForm.dataset.layout === 'all-at-once') {
         const correctAnswers = allAtOnceQuestions.filter(question => {
             return question.querySelector('input:checked').value === question.dataset.correct;
         }).length;
+        const incorrectAnswers = allAtOnceQuestions.length - correctAnswers;
 
-        if (correctAnswers === allAtOnceQuestions.length) {
-            advanceJobLevel('Q2-Slider.html');
+        if (incorrectAnswers >= 3) {
+            window.location.href = 'Message.html';
             return;
         }
 
-        allAtOnceMessage.textContent = `You got ${correctAnswers} of ${allAtOnceQuestions.length} correct. Review your answers and try again.`;
+        advanceJobLevel('Q2-Slider.html');
     });
 }
 
@@ -165,12 +166,14 @@ if (sliderSurvey) {
     sliderSurvey.addEventListener('submit', (event) => {
         event.preventDefault();
 
-        const allAnswersCorrect = surveyGroups.every((group) => {
+        const incorrectAnswers = surveyGroups.filter((group) => {
             const slider = group.querySelector('input[type="range"]');
-            return slider && (slider.value === '1' || slider.value === '10') && slider.value === group.dataset.correct;
-        });
+            return !slider
+                || slider.value !== group.dataset.correct
+                || !['1', '10'].includes(slider.value);
+        }).length;
 
-        if (!allAnswersCorrect) {
+        if (incorrectAnswers >= 3) {
             window.location.href = 'Message.html';
             return;
         }
